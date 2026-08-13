@@ -10,25 +10,25 @@ public interface JobSeekerSkillService {
 
     // Add a new skill to the logged-in Job Seeker
     SkillResponse addSkill(
-            String email,
+            String username,
             AddSkillRequest request
     );
 
     // Get all skills of the logged-in Job Seeker
     List<SkillResponse> getMySkills(
-            String email
+            String username
     );
 
     // Update an existing skill
     SkillResponse updateSkill(
-            String email,
+            String username,
             Long skillId,
             UpdateSkillRequest request
     );
 
     // Delete an existing skill
     void deleteSkill(
-            String email,
+            String username,
             Long skillId
     );
 }

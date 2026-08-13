@@ -30,11 +30,10 @@ public class JobSeekerProfileController {
             > getMyProfile(
             Authentication authentication) {
 
-        String email =
-                authentication.getName();
+        String username = authentication.getName();
 
         JobSeekerProfileResponse response =
-                profileService.getMyProfile(email);
+                profileService.getMyProfile(username);
 
         return ResponseEntity.ok(
                 ApiResponse.success(
@@ -52,12 +51,11 @@ public class JobSeekerProfileController {
             @Valid @RequestBody
             UpdateJobSeekerProfileRequest request) {
 
-        String email =
-                authentication.getName();
+        String username = authentication.getName();
 
         JobSeekerProfileResponse response =
                 profileService.updateMyProfile(
-                        email,
+                        username,
                         request
                 );
 

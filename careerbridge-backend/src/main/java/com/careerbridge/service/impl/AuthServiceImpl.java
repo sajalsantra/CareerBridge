@@ -8,6 +8,8 @@ import com.careerbridge.entity.Role;
 import com.careerbridge.entity.User;
 import com.careerbridge.entity.UserRole;
 import com.careerbridge.entity.UserRoleId;
+import com.careerbridge.exception.DuplicateResourceException;
+import com.careerbridge.exception.ResourceNotFoundException;
 import com.careerbridge.repository.JobSeekerProfileRepository;
 import com.careerbridge.repository.RoleRepository;
 import com.careerbridge.repository.UserRepository;
@@ -62,26 +64,42 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public void register(RegisterRequest request) {
 
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException(
+        // 1. Check username
+        if (userRepository.existsByUsername(
+                request.getUsername())) {
+
+            throw new DuplicateResourceException(
+                    "Username already registered"
+            );
+        }
+
+        // 2. Check email
+        if (userRepository.existsByEmail(
+                request.getEmail())) {
+
+            throw new DuplicateResourceException(
                     "Email already registered"
             );
         }
 
+        // 3. Find JOB_SEEKER role
         Role jobSeekerRole = roleRepository
                 .findByName("JOB_SEEKER")
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "JOB_SEEKER role not found"
                         )
                 );
 
+        // 4. Create User
         User user = new User();
 
+        user.setUsername(request.getUsername());
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
 
+        // 5. Encrypt password
         user.setPassword(
                 passwordEncoder.encode(
                         request.getPassword()
@@ -91,8 +109,11 @@ public class AuthServiceImpl implements AuthService {
         user.setActive(true);
         user.setEmailVerified(false);
 
-        User savedUser = userRepository.save(user);
+        // 6. Save User
+        User savedUser =
+                userRepository.save(user);
 
+        // 7. Create UserRole
         UserRole userRole = new UserRole();
 
         userRole.setUser(savedUser);
@@ -107,6 +128,7 @@ public class AuthServiceImpl implements AuthService {
 
         userRoleRepository.save(userRole);
 
+        // 8. Create Job Seeker Profile
         JobSeekerProfile profile =
                 new JobSeekerProfile();
 
@@ -122,7 +144,7 @@ public class AuthServiceImpl implements AuthService {
         Authentication authentication =
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(
-                                request.getEmail(),
+                                request.getUsernameOrEmail(),
                                 request.getPassword()
                         )
                 );
@@ -134,9 +156,9 @@ public class AuthServiceImpl implements AuthService {
                 jwtService.generateToken(userDetails);
 
         User user = userRepository
-                .findByEmail(request.getEmail())
+                .findByUsernameOrEmail(request.getUsernameOrEmail(), request.getUsernameOrEmail())
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "User not found"
                         )
                 );
@@ -153,6 +175,7 @@ public class AuthServiceImpl implements AuthService {
                 token,
                 user.getId(),
                 user.getFullName(),
+                user.getUsername(),
                 user.getEmail(),
                 roles
         );

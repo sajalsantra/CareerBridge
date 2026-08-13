@@ -1,5 +1,6 @@
 package com.careerbridge.controller;
 
+import com.careerbridge.dto.error.ApiErrorResponse;
 import com.careerbridge.dto.jobseeker.AddSkillRequest;
 import com.careerbridge.dto.jobseeker.SkillResponse;
 import com.careerbridge.dto.jobseeker.UpdateSkillRequest;
@@ -26,19 +27,16 @@ public class JobSeekerSkillController {
         this.jobSeekerSkillService = jobSeekerSkillService;
     }
 
-    // ADD SKILL
-    // POST /api/job-seeker/skills
-
     @PostMapping
     public ResponseEntity<SkillResponse> addSkill(
             @Valid @RequestBody AddSkillRequest request,
             Authentication authentication) {
 
-        String email = authentication.getName();
+        String username = authentication.getName();
 
         SkillResponse response =
                 jobSeekerSkillService.addSkill(
-                        email,
+                        username,
                         request
                 );
 
@@ -47,25 +45,19 @@ public class JobSeekerSkillController {
                 .body(response);
     }
 
-    // GET MY SKILLS
-    // GET /api/job-seeker/skills
-
     @GetMapping
     public ResponseEntity<List<SkillResponse>> getMySkills(
             Authentication authentication) {
 
-        String email = authentication.getName();
+        String username = authentication.getName();
 
         List<SkillResponse> skills =
                 jobSeekerSkillService.getMySkills(
-                        email
+                        username
                 );
 
         return ResponseEntity.ok(skills);
     }
-
-    // UPDATE SKILL
-    // PUT /api/job-seeker/skills/{skillId}
 
     @PutMapping("/{skillId}")
     public ResponseEntity<SkillResponse> updateSkill(
@@ -73,11 +65,11 @@ public class JobSeekerSkillController {
             @Valid @RequestBody UpdateSkillRequest request,
             Authentication authentication) {
 
-        String email = authentication.getName();
+        String username = authentication.getName();
 
         SkillResponse response =
                 jobSeekerSkillService.updateSkill(
-                        email,
+                        username,
                         skillId,
                         request
                 );
@@ -85,21 +77,22 @@ public class JobSeekerSkillController {
         return ResponseEntity.ok(response);
     }
 
-    // DELETE SKILL
-    // DELETE /api/job-seeker/skills/{skillId}
-
     @DeleteMapping("/{skillId}")
-    public ResponseEntity<Void> deleteSkill(
+    public ResponseEntity<ApiErrorResponse> deleteSkill(
             @PathVariable Long skillId,
             Authentication authentication) {
 
-        String email = authentication.getName();
+        String username = authentication.getName();
 
         jobSeekerSkillService.deleteSkill(
-                email,
+                username,
                 skillId
         );
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(
+                new ApiErrorResponse(
+                        "Skill deleted successfully."
+                )
+        );
     }
 }

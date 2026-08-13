@@ -8,6 +8,7 @@ public class AuthResponse {
     private String tokenType;
     private Long userId;
     private String fullName;
+    private String userName;
     private String email;
     private List<String> roles;
     public AuthResponse() {
@@ -17,6 +18,7 @@ public class AuthResponse {
             String token,
             Long userId,
             String fullName,
+            String userName,
             String email,
             List<String> roles) {
 
@@ -24,6 +26,7 @@ public class AuthResponse {
         this.tokenType = "Bearer";
         this.userId = userId;
         this.fullName = fullName;
+        this.userName = userName;
         this.email = email;
         this.roles = roles;
     }
@@ -58,6 +61,14 @@ public class AuthResponse {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {

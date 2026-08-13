@@ -4,6 +4,7 @@ import com.careerbridge.dto.jobseeker.JobSeekerProfileResponse;
 import com.careerbridge.dto.jobseeker.UpdateJobSeekerProfileRequest;
 import com.careerbridge.entity.JobSeekerProfile;
 import com.careerbridge.entity.User;
+import com.careerbridge.exception.ResourceNotFoundException;
 import com.careerbridge.repository.JobSeekerProfileRepository;
 import com.careerbridge.repository.UserRepository;
 import com.careerbridge.service.JobSeekerProfileService;
@@ -29,9 +30,9 @@ public class JobSeekerProfileServiceImpl
     @Override
     @Transactional(readOnly = true)
     public JobSeekerProfileResponse getMyProfile(
-            String email) {
+            String username) {
 
-        User user = getUser(email);
+        User user = getUser(username);
 
         JobSeekerProfile profile =
                 getProfile(user.getId());
@@ -42,73 +43,102 @@ public class JobSeekerProfileServiceImpl
     @Override
     @Transactional
     public JobSeekerProfileResponse updateMyProfile(
-            String email,
+            String username,
             UpdateJobSeekerProfileRequest request) {
 
-        User user = getUser(email);
+        User user = getUser(username);
 
         JobSeekerProfile profile =
                 getProfile(user.getId());
 
-        // Update User information
-        user.setFullName(
-                request.getFullName()
-        );
+        // ==========================================
+        // Update User Information
+        // ==========================================
 
-        user.setEmail(
-                request.getEmail()
-        );
+        if (request.getFullName() != null) {
+            user.setFullName(
+                    request.getFullName()
+            );
+        }
 
-        user.setPhone(
-                request.getPhone()
-        );
+        if (request.getEmail() != null) {
+            user.setEmail(
+                    request.getEmail()
+            );
+        }
 
-        // Update Job Seeker Profile
-        profile.setHeadline(
-                request.getHeadline()
-        );
+        if (request.getPhone() != null) {
+            user.setPhone(
+                    request.getPhone()
+            );
+        }
 
-        profile.setProfessionalSummary(
-                request.getProfessionalSummary()
-        );
+        if (request.getHeadline() != null) {
+            profile.setHeadline(
+                    request.getHeadline()
+            );
+        }
 
-        profile.setLocation(
-                request.getLocation()
-        );
+        if (request.getProfessionalSummary() != null) {
+            profile.setProfessionalSummary(
+                    request.getProfessionalSummary()
+            );
+        }
 
-        profile.setPreferredLocation(
-                request.getPreferredLocation()
-        );
+        if (request.getLocation() != null) {
+            profile.setLocation(
+                    request.getLocation()
+            );
+        }
 
-        profile.setCurrentJobTitle(
-                request.getCurrentJobTitle()
-        );
+        if (request.getPreferredLocation() != null) {
+            profile.setPreferredLocation(
+                    request.getPreferredLocation()
+            );
+        }
 
-        profile.setCurrentCompany(
-                request.getCurrentCompany()
-        );
+        if (request.getCurrentJobTitle() != null) {
+            profile.setCurrentJobTitle(
+                    request.getCurrentJobTitle()
+            );
+        }
 
-        profile.setTotalExperienceYears(
-                request.getTotalExperienceYears()
-        );
+        if (request.getCurrentCompany() != null) {
+            profile.setCurrentCompany(
+                    request.getCurrentCompany()
+            );
+        }
 
-        profile.setExpectedSalary(
-                request.getExpectedSalary()
-        );
+        if (request.getTotalExperienceYears() != null) {
+            profile.setTotalExperienceYears(
+                    request.getTotalExperienceYears()
+            );
+        }
 
-        profile.setNoticePeriodDays(
-                request.getNoticePeriodDays()
-        );
+        if (request.getExpectedSalary() != null) {
+            profile.setExpectedSalary(
+                    request.getExpectedSalary()
+            );
+        }
 
-        profile.setPreferredJobType(
-                request.getPreferredJobType()
-        );
+        if (request.getNoticePeriodDays() != null) {
+            profile.setNoticePeriodDays(
+                    request.getNoticePeriodDays()
+            );
+        }
 
-        profile.setPreferredWorkMode(
-                request.getPreferredWorkMode()
-        );
+        if (request.getPreferredJobType() != null) {
+            profile.setPreferredJobType(
+                    request.getPreferredJobType()
+            );
+        }
 
-        // Calculate profile completion
+        if (request.getPreferredWorkMode() != null) {
+            profile.setPreferredWorkMode(
+                    request.getPreferredWorkMode()
+            );
+        }
+
         int completion =
                 calculateProfileCompletion(
                         user,
@@ -125,12 +155,12 @@ public class JobSeekerProfileServiceImpl
         return mapToResponse(user, profile);
     }
 
-    private User getUser(String email) {
+    private User getUser(String username) {
 
         return userRepository
-                .findByEmail(email)
+                .findByUsername(username)
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "User not found"
                         )
                 );
@@ -142,7 +172,7 @@ public class JobSeekerProfileServiceImpl
         return profileRepository
                 .findByUserId(userId)
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "Job seeker profile not found"
                         )
                 );

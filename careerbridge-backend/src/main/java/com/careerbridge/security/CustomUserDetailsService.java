@@ -3,11 +3,13 @@ package com.careerbridge.security;
 import com.careerbridge.entity.User;
 import com.careerbridge.repository.UserRepository;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 
@@ -24,19 +26,22 @@ public class CustomUserDetailsService
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
+    @Transactional(readOnly = true)
+    public @NonNull UserDetails loadUserByUsername(@NonNull String usernameOrEmail) throws UsernameNotFoundException {
 
         User user = userRepository
-                .findByEmail(email)
+                .findByUsernameOrEmailWithRoles(
+                        usernameOrEmail,
+                        usernameOrEmail
+                )
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
-                                "User not found with email: " + email
+                                "User not found"
                         )
                 );
 
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
+                .withUsername(user.getUsername())
                 .password(user.getPassword())
                 .authorities(
                         user.getUserRoles()
@@ -44,12 +49,18 @@ public class CustomUserDetailsService
                                 .map(userRole ->
                                         new SimpleGrantedAuthority(
                                                 "ROLE_" +
-                                                        userRole.getRole().getName()
+                                                        userRole
+                                                                .getRole()
+                                                                .getName()
                                         )
                                 )
                                 .collect(Collectors.toList())
                 )
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
                 .disabled(!user.getActive())
                 .build();
     }
+
 }

@@ -12,7 +12,7 @@ public class UpdateJobSeekerProfileRequest {
     @Size(max = 100, message = "Full name cannot exceed 100 characters")
     private String fullName;
 
-    @NotBlank(message = "Email is required")
+//    @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
     private String email;
 

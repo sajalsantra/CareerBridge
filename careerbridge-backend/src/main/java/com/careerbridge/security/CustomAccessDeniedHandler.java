@@ -24,7 +24,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setContentType("application/json");
 
         response.getWriter().write(
-                "Access denied. You do not have permission to access this resource."
+                "{\"message\":\"Access denied. You do not have permission to access this resource.\"}"
         );
     }
 }

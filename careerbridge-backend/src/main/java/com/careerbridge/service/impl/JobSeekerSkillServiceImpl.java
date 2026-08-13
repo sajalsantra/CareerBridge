@@ -7,6 +7,8 @@ import com.careerbridge.entity.JobSeekerProfile;
 import com.careerbridge.entity.JobSeekerSkill;
 import com.careerbridge.entity.Skill;
 import com.careerbridge.entity.User;
+import com.careerbridge.exception.DuplicateResourceException;
+import com.careerbridge.exception.ResourceNotFoundException;
 import com.careerbridge.repository.JobSeekerProfileRepository;
 import com.careerbridge.repository.JobSeekerSkillRepository;
 import com.careerbridge.repository.SkillRepository;
@@ -44,13 +46,13 @@ public class JobSeekerSkillServiceImpl
 
     @Override
     public SkillResponse addSkill(
-            String email,
+            String username,
             AddSkillRequest request) {
 
         // 1. Find logged-in user
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "User not found"
                         )
                 );
@@ -60,7 +62,7 @@ public class JobSeekerSkillServiceImpl
                 jobSeekerProfileRepository
                         .findByUserId(user.getId())
                         .orElseThrow(() ->
-                                new RuntimeException(
+                                new ResourceNotFoundException(
                                         "Job Seeker profile not found"
                                 )
                         );
@@ -69,7 +71,7 @@ public class JobSeekerSkillServiceImpl
         Skill skill = skillRepository
                 .findById(request.getSkillId())
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "Skill not found"
                         )
                 );
@@ -80,7 +82,7 @@ public class JobSeekerSkillServiceImpl
                         profile.getId(),
                         skill.getId())) {
 
-            throw new RuntimeException(
+            throw new DuplicateResourceException(
                     "Skill already added to your profile"
             );
         }
@@ -110,12 +112,12 @@ public class JobSeekerSkillServiceImpl
     @Override
     @Transactional(readOnly = true)
     public List<SkillResponse> getMySkills(
-            String email) {
+            String username) {
 
         // 1. Find logged-in user
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "User not found"
                         )
                 );
@@ -125,7 +127,7 @@ public class JobSeekerSkillServiceImpl
                 jobSeekerProfileRepository
                         .findByUserId(user.getId())
                         .orElseThrow(() ->
-                                new RuntimeException(
+                                new ResourceNotFoundException(
                                         "Job Seeker profile not found"
                                 )
                         );
@@ -145,14 +147,14 @@ public class JobSeekerSkillServiceImpl
 
     @Override
     public SkillResponse updateSkill(
-            String email,
+            String username,
             Long skillId,
             UpdateSkillRequest request) {
 
         // 1. Find logged-in user
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "User not found"
                         )
                 );
@@ -162,7 +164,7 @@ public class JobSeekerSkillServiceImpl
                 jobSeekerProfileRepository
                         .findByUserId(user.getId())
                         .orElseThrow(() ->
-                                new RuntimeException(
+                                new ResourceNotFoundException(
                                         "Job Seeker profile not found"
                                 )
                         );
@@ -175,7 +177,7 @@ public class JobSeekerSkillServiceImpl
                                 profile.getId()
                         )
                         .orElseThrow(() ->
-                                new RuntimeException(
+                                new ResourceNotFoundException(
                                         "Skill not found in your profile"
                                 )
                         );
@@ -185,9 +187,11 @@ public class JobSeekerSkillServiceImpl
                 request.getProficiencyLevel()
         );
 
-        jobSeekerSkill.setYearsOfExperience(
-                request.getYearsOfExperience()
-        );
+        if (request.getYearsOfExperience() != null) {
+            jobSeekerSkill.setYearsOfExperience(
+                    request.getYearsOfExperience()
+            );
+        }
 
         // 5. Save
         JobSeekerSkill updated =
@@ -200,13 +204,13 @@ public class JobSeekerSkillServiceImpl
 
     @Override
     public void deleteSkill(
-            String email,
+            String username,
             Long skillId) {
 
         // 1. Find logged-in user
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ResourceNotFoundException(
                                 "User not found"
                         )
                 );
@@ -216,7 +220,7 @@ public class JobSeekerSkillServiceImpl
                 jobSeekerProfileRepository
                         .findByUserId(user.getId())
                         .orElseThrow(() ->
-                                new RuntimeException(
+                                new ResourceNotFoundException(
                                         "Job Seeker profile not found"
                                 )
                         );
@@ -229,7 +233,7 @@ public class JobSeekerSkillServiceImpl
                                 profile.getId()
                         )
                         .orElseThrow(() ->
-                                new RuntimeException(
+                                new ResourceNotFoundException(
                                         "Skill not found in your profile"
                                 )
                         );

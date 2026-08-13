@@ -5,10 +5,10 @@ import com.careerbridge.dto.jobseeker.UpdateJobSeekerProfileRequest;
 
 public interface JobSeekerProfileService {
 
-    JobSeekerProfileResponse getMyProfile(String email);
+    JobSeekerProfileResponse getMyProfile(String username);
 
     JobSeekerProfileResponse updateMyProfile(
-            String email,
+            String username,
             UpdateJobSeekerProfileRequest request
     );
 }
