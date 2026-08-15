@@ -1,11 +1,12 @@
-package com.careerbridge.service.impl;
+package com.careerbridge.service.impl.jobseeker;
 
-import com.careerbridge.dto.jobseeker.JobSeekerProfileResponse;
-import com.careerbridge.dto.jobseeker.UpdateJobSeekerProfileRequest;
-import com.careerbridge.entity.JobSeekerProfile;
+import com.careerbridge.constant.AppConstant;
+import com.careerbridge.dto.jobseeker.profile.JobSeekerProfileResponse;
+import com.careerbridge.dto.jobseeker.profile.UpdateJobSeekerProfileRequest;
+import com.careerbridge.entity.jobseeker.JobSeekerProfile;
 import com.careerbridge.entity.User;
 import com.careerbridge.exception.ResourceNotFoundException;
-import com.careerbridge.repository.JobSeekerProfileRepository;
+import com.careerbridge.repository.jobseeker.JobSeekerProfileRepository;
 import com.careerbridge.repository.UserRepository;
 import com.careerbridge.service.JobSeekerProfileService;
 
@@ -161,7 +162,7 @@ public class JobSeekerProfileServiceImpl
                 .findByUsername(username)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "User not found"
+                                AppConstant.USER_NOT_FOUND
                         )
                 );
     }
@@ -173,7 +174,7 @@ public class JobSeekerProfileServiceImpl
                 .findByUserId(userId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "Job seeker profile not found"
+                                AppConstant.JOBSEEKER_PROFILE_NOT_FOUND
                         )
                 );
     }

@@ -1,21 +1,28 @@
-package com.careerbridge.dto.jobseeker;
+package com.careerbridge.dto.jobseeker.profile;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
-public class JobSeekerProfileResponse {
+public class UpdateJobSeekerProfileRequest {
 
-    private Long id;
-
-    private Long userId;
-
+    @NotBlank(message = "Full name is required")
+    @Size(max = 100, message = "Full name cannot exceed 100 characters")
     private String fullName;
 
+//    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
     private String email;
 
+    @Size(max = 20, message = "Phone number cannot exceed 20 characters")
     private String phone;
 
+    @Size(max = 100, message = "Headline cannot exceed 100 characters")
     private String headline;
 
+    @Size(max = 2000, message = "Summary cannot exceed 2000 characters")
     private String professionalSummary;
 
     private String location;
@@ -36,25 +43,7 @@ public class JobSeekerProfileResponse {
 
     private String preferredWorkMode;
 
-    private Integer profileCompletionPercentage;
-
-    public JobSeekerProfileResponse() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public UpdateJobSeekerProfileRequest() {
     }
 
     public String getFullName() {
@@ -167,16 +156,5 @@ public class JobSeekerProfileResponse {
 
     public void setPreferredWorkMode(String preferredWorkMode) {
         this.preferredWorkMode = preferredWorkMode;
-    }
-
-    public Integer getProfileCompletionPercentage() {
-        return profileCompletionPercentage;
-    }
-
-    public void setProfileCompletionPercentage(
-            Integer profileCompletionPercentage) {
-
-        this.profileCompletionPercentage =
-                profileCompletionPercentage;
     }
 }

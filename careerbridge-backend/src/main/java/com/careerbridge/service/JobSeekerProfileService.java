@@ -1,7 +1,7 @@
 package com.careerbridge.service;
 
-import com.careerbridge.dto.jobseeker.JobSeekerProfileResponse;
-import com.careerbridge.dto.jobseeker.UpdateJobSeekerProfileRequest;
+import com.careerbridge.dto.jobseeker.profile.JobSeekerProfileResponse;
+import com.careerbridge.dto.jobseeker.profile.UpdateJobSeekerProfileRequest;
 
 public interface JobSeekerProfileService {
 

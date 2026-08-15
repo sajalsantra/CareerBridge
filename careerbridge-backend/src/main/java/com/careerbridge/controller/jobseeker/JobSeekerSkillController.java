@@ -1,9 +1,10 @@
-package com.careerbridge.controller;
+package com.careerbridge.controller.jobseeker;
 
+import com.careerbridge.constant.AppConstant;
 import com.careerbridge.dto.error.ApiErrorResponse;
-import com.careerbridge.dto.jobseeker.AddSkillRequest;
-import com.careerbridge.dto.jobseeker.SkillResponse;
-import com.careerbridge.dto.jobseeker.UpdateSkillRequest;
+import com.careerbridge.dto.jobseeker.skills.AddSkillRequest;
+import com.careerbridge.dto.jobseeker.skills.SkillResponse;
+import com.careerbridge.dto.jobseeker.skills.UpdateSkillRequest;
 import com.careerbridge.service.JobSeekerSkillService;
 
 import jakarta.validation.Valid;
@@ -91,7 +92,7 @@ public class JobSeekerSkillController {
 
         return ResponseEntity.ok(
                 new ApiErrorResponse(
-                        "Skill deleted successfully."
+                        AppConstant.SKILL_DELETE_SUCCEEDED
                 )
         );
     }

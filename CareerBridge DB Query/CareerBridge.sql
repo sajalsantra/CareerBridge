@@ -28,23 +28,15 @@ CREATE TABLE roles (
 
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     full_name VARCHAR(100) NOT NULL,
-
+    username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(150) NOT NULL UNIQUE,
-
     phone VARCHAR(20),
-
     password VARCHAR(255) NOT NULL,
-
     location VARCHAR(150),
-
     profile_image_url VARCHAR(500),
-
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
-
     is_email_verified BOOLEAN NOT NULL DEFAULT FALSE,
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -80,31 +72,18 @@ CREATE TABLE user_roles (
 
 CREATE TABLE job_seeker_profiles (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     user_id BIGINT NOT NULL UNIQUE,
-
     current_job_title VARCHAR(150),
-
     current_company VARCHAR(150),
-
     total_experience_years DECIMAL(4,2) DEFAULT 0,
-
     current_salary DECIMAL(12,2),
-
     expected_salary DECIMAL(12,2),
-
     notice_period_days INT,
-
     preferred_locations VARCHAR(500),
-
     preferred_job_type VARCHAR(50),
-
     preferred_work_mode VARCHAR(50),
-
     career_summary TEXT,
-
     profile_completion_percentage INT NOT NULL DEFAULT 0,
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -137,17 +116,11 @@ CREATE TABLE skills (
 
 CREATE TABLE job_seeker_skills (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     job_seeker_profile_id BIGINT NOT NULL,
-
     skill_id BIGINT NOT NULL,
-
     proficiency_level VARCHAR(50),
-
     years_of_experience DECIMAL(4,2),
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
     CONSTRAINT fk_job_seeker_skill_profile
         FOREIGN KEY (job_seeker_profile_id)
         REFERENCES job_seeker_profiles(id)
@@ -166,55 +139,42 @@ CREATE TABLE job_seeker_skills (
 -- ============================================================
 -- 8. EDUCATION
 -- ============================================================
-
-CREATE TABLE educations (
+CREATE TABLE job_seeker_education (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_seeker_profile_id BIGINT NOT NULL,
     degree VARCHAR(150) NOT NULL,
     field_of_study VARCHAR(150),
-    institution VARCHAR(200) NOT NULL,
-    start_year YEAR,
-    end_year YEAR,
-    grade DECIMAL(5,2),
-    grade_type VARCHAR(30),
+    institution_name VARCHAR(200) NOT NULL,
+    location VARCHAR(200),
+    start_date DATE,
+    end_date DATE,
+    is_current BOOLEAN NOT NULL DEFAULT FALSE,
+    grade VARCHAR(50),
     description TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_education_profile
-        FOREIGN KEY (job_seeker_profile_id)
-        REFERENCES job_seeker_profiles(id)
-        ON DELETE CASCADE
+    ON UPDATE CURRENT_TIMESTAMP,
+           CONSTRAINT fk_education_profile
+           FOREIGN KEY (job_seeker_profile_id)
+           REFERENCES job_seeker_profiles(id)
+       ON DELETE CASCADE
 );
-
-
 -- ============================================================
 -- 9. WORK EXPERIENCE
 -- ============================================================
 
 CREATE TABLE experiences (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     job_seeker_profile_id BIGINT NOT NULL,
-
     company_name VARCHAR(200) NOT NULL,
-
     job_title VARCHAR(150) NOT NULL,
-
     employment_type VARCHAR(50),
-
     location VARCHAR(150),
-
     start_date DATE NOT NULL,
-
     end_date DATE,
-
     currently_working BOOLEAN NOT NULL DEFAULT FALSE,
-
     description TEXT,
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
 
@@ -224,28 +184,19 @@ CREATE TABLE experiences (
         ON DELETE CASCADE
 );
 
-
 -- ============================================================
 -- 10. PROJECTS
 -- ============================================================
 
 CREATE TABLE projects (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     job_seeker_profile_id BIGINT NOT NULL,
-
     project_name VARCHAR(200) NOT NULL,
-
     description TEXT,
-
     technologies VARCHAR(500),
-
     project_url VARCHAR(500),
-
     start_date DATE,
-
     end_date DATE,
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -264,21 +215,13 @@ CREATE TABLE projects (
 
 CREATE TABLE certifications (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     job_seeker_profile_id BIGINT NOT NULL,
-
     certification_name VARCHAR(200) NOT NULL,
-
     issuing_organization VARCHAR(200),
-
     issue_date DATE,
-
     expiry_date DATE,
-
     credential_id VARCHAR(150),
-
     credential_url VARCHAR(500),
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -297,21 +240,13 @@ CREATE TABLE certifications (
 
 CREATE TABLE resumes (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     job_seeker_profile_id BIGINT NOT NULL,
-
     resume_name VARCHAR(255) NOT NULL,
-
     original_file_name VARCHAR(255),
-
     file_path VARCHAR(500) NOT NULL,
-
     file_type VARCHAR(100),
-
     file_size BIGINT,
-
     is_primary BOOLEAN NOT NULL DEFAULT FALSE,
-
     uploaded_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -330,13 +265,9 @@ CREATE TABLE resumes (
 
 CREATE TABLE job_categories (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     name VARCHAR(100) NOT NULL UNIQUE,
-
     description VARCHAR(500),
-
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -347,43 +278,24 @@ CREATE TABLE job_categories (
 
 CREATE TABLE jobs (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     job_title VARCHAR(200) NOT NULL,
-
     company_name VARCHAR(200) NOT NULL,
-
     company_logo_url VARCHAR(500),
-
     description TEXT NOT NULL,
-
     responsibilities TEXT,
-
     qualifications TEXT,
-
     location VARCHAR(150),
-
     job_type VARCHAR(50),
-
     work_mode VARCHAR(50),
-
     experience_min DECIMAL(4,2),
-
     experience_max DECIMAL(4,2),
-
     salary_min DECIMAL(12,2),
-
     salary_max DECIMAL(12,2),
-
     number_of_openings INT DEFAULT 1,
-
     category_id BIGINT,
-
     posted_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
     application_deadline DATE,
-
     status VARCHAR(50) NOT NULL DEFAULT 'ACTIVE',
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -402,13 +314,9 @@ CREATE TABLE jobs (
 
 CREATE TABLE job_skills (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     job_id BIGINT NOT NULL,
-
     skill_id BIGINT NOT NULL,
-
     is_required BOOLEAN NOT NULL DEFAULT TRUE,
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_job_skill_job
@@ -432,19 +340,12 @@ CREATE TABLE job_skills (
 
 CREATE TABLE applications (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     job_id BIGINT NOT NULL,
-
     job_seeker_profile_id BIGINT NOT NULL,
-
     resume_id BIGINT,
-
     cover_letter TEXT,
-
     status VARCHAR(50) NOT NULL DEFAULT 'APPLIED',
-
     recruiter_remarks TEXT,
-
     applied_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -476,11 +377,8 @@ CREATE TABLE applications (
 
 CREATE TABLE saved_jobs (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     job_id BIGINT NOT NULL,
-
     job_seeker_profile_id BIGINT NOT NULL,
-
     saved_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_saved_job
@@ -504,19 +402,12 @@ CREATE TABLE saved_jobs (
 
 CREATE TABLE notifications (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     user_id BIGINT NOT NULL,
-
     title VARCHAR(200) NOT NULL,
-
     message TEXT NOT NULL,
-
     notification_type VARCHAR(100),
-
     reference_id BIGINT,
-
     is_read BOOLEAN NOT NULL DEFAULT FALSE,
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_notification_user
@@ -532,19 +423,12 @@ CREATE TABLE notifications (
 
 CREATE TABLE job_reports (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-
     job_id BIGINT NOT NULL,
-
     reported_by BIGINT NOT NULL,
-
     reason VARCHAR(100) NOT NULL,
-
     description TEXT,
-
     status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
     resolved_at TIMESTAMP NULL,
 
     CONSTRAINT fk_report_job

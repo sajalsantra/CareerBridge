@@ -1,16 +1,17 @@
 package com.careerbridge.service.impl;
 
+import com.careerbridge.constant.AppConstant;
 import com.careerbridge.dto.auth.LoginRequest;
 import com.careerbridge.dto.auth.RegisterRequest;
 import com.careerbridge.dto.response.AuthResponse;
-import com.careerbridge.entity.JobSeekerProfile;
+import com.careerbridge.entity.jobseeker.JobSeekerProfile;
 import com.careerbridge.entity.Role;
 import com.careerbridge.entity.User;
 import com.careerbridge.entity.UserRole;
 import com.careerbridge.entity.UserRoleId;
 import com.careerbridge.exception.DuplicateResourceException;
 import com.careerbridge.exception.ResourceNotFoundException;
-import com.careerbridge.repository.JobSeekerProfileRepository;
+import com.careerbridge.repository.jobseeker.JobSeekerProfileRepository;
 import com.careerbridge.repository.RoleRepository;
 import com.careerbridge.repository.UserRepository;
 import com.careerbridge.repository.UserRoleRepository;
@@ -159,7 +160,7 @@ public class AuthServiceImpl implements AuthService {
                 .findByUsernameOrEmail(request.getUsernameOrEmail(), request.getUsernameOrEmail())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "User not found"
+                                AppConstant.USER_NOT_FOUND
                         )
                 );
 

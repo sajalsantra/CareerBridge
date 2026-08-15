@@ -79,7 +79,8 @@ Job Seekers can add their technical and professional skills along with:
 - Skill name
 - Proficiency level
 - Years of experience
-  **🎓 Education**
+  
+**🎓 Education**
 
 Job Seekers can maintain their educational background including:
 
@@ -91,7 +92,8 @@ Job Seekers can maintain their educational background including:
 - End date
 - Grade
 - Description
-  **💼 Future Career Information**
+  
+**💼 Future Career Information**
 
 The platform will also support:
 
@@ -255,7 +257,6 @@ Smart Features
 CareerBridge is being built with modern web technologies.
 
 **Backend**
-
 - Java
 - Spring Boot
 - Spring Security
@@ -263,17 +264,17 @@ CareerBridge is being built with modern web technologies.
 - Spring Data JPA
 - Hibernate
 - REST API
-  **Frontend**
-
+  
+**Frontend**
 - Angular
 - TypeScript
 - HTML5
 - CSS3
-  **Database**
 
+**Database**
 - MySQL
-  **Tools**
-
+  
+**Tools**
 - Git
 - GitHub
 - IntelliJ IDEA

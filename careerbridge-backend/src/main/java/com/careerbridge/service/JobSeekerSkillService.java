@@ -1,8 +1,8 @@
 package com.careerbridge.service;
 
-import com.careerbridge.dto.jobseeker.AddSkillRequest;
-import com.careerbridge.dto.jobseeker.SkillResponse;
-import com.careerbridge.dto.jobseeker.UpdateSkillRequest;
+import com.careerbridge.dto.jobseeker.skills.AddSkillRequest;
+import com.careerbridge.dto.jobseeker.skills.SkillResponse;
+import com.careerbridge.dto.jobseeker.skills.UpdateSkillRequest;
 
 import java.util.List;
 

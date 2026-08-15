@@ -1,5 +1,6 @@
-package com.careerbridge.entity;
+package com.careerbridge.entity.jobseeker;
 
+import com.careerbridge.entity.User;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

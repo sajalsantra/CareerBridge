@@ -1,5 +1,6 @@
 package com.careerbridge.security;
 
+import com.careerbridge.constant.AppConstant;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // No JWT → continue request
         if (authHeader == null ||
-                !authHeader.startsWith("Bearer ")) {
+                !authHeader.startsWith(AppConstant.JWT_TOKEN_TYPE)) {
 
             filterChain.doFilter(request, response);
             return;
@@ -90,7 +91,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (Exception e) {
 
             System.out.println(
-                    "JWT validation failed: "
+                    AppConstant.JWT_TOKEN_VALIDATION_FAILED
                             + e.getMessage()
             );
         }

@@ -1,5 +1,6 @@
 package com.careerbridge.exception;
 
+import com.careerbridge.constant.AppConstant;
 import com.careerbridge.dto.error.ApiErrorResponse;
 
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class GlobalExceptionHandler {
                     .status(HttpStatus.UNAUTHORIZED)
                     .body(
                             new ApiErrorResponse(
-                                    "Bad credentials. Please check your username/email and password."
+                                    AppConstant.UNAUTHORIZED
                             )
                     );
         }
@@ -74,7 +75,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(
                         new ApiErrorResponse(
-                                "Something went wrong. Please try again later."
+                                AppConstant.INTERNAL_SERVER_ERROR
                         )
                 );
     }

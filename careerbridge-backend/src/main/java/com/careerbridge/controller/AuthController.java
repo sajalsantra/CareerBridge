@@ -1,5 +1,6 @@
 package com.careerbridge.controller;
 
+import com.careerbridge.constant.AppConstant;
 import com.careerbridge.dto.auth.LoginRequest;
 import com.careerbridge.dto.auth.RegisterRequest;
 import com.careerbridge.dto.response.ApiResponse;
@@ -35,7 +36,7 @@ public class AuthController {
                 .status(HttpStatus.CREATED)
                 .body(
                         ApiResponse.success(
-                                "Registration successful",
+                                AppConstant.REGISTRATION_SUCCEEDED,
                                 null
                         )
                 );
@@ -50,7 +51,7 @@ public class AuthController {
 
         return ResponseEntity.ok(
                 ApiResponse.success(
-                        "Login successful",
+                        AppConstant.LOGIN_SUCCEEDED,
                         response
                 )
         );

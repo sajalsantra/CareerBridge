@@ -1,7 +1,8 @@
-package com.careerbridge.controller;
+package com.careerbridge.controller.jobseeker;
 
-import com.careerbridge.dto.jobseeker.JobSeekerProfileResponse;
-import com.careerbridge.dto.jobseeker.UpdateJobSeekerProfileRequest;
+import com.careerbridge.constant.AppConstant;
+import com.careerbridge.dto.jobseeker.profile.JobSeekerProfileResponse;
+import com.careerbridge.dto.jobseeker.profile.UpdateJobSeekerProfileRequest;
 import com.careerbridge.dto.response.ApiResponse;
 import com.careerbridge.service.JobSeekerProfileService;
 
@@ -37,7 +38,7 @@ public class JobSeekerProfileController {
 
         return ResponseEntity.ok(
                 ApiResponse.success(
-                        "Profile fetched successfully",
+                        AppConstant.PROFILE_FETCHED_SUCCEEDED,
                         response
                 )
         );
@@ -61,7 +62,7 @@ public class JobSeekerProfileController {
 
         return ResponseEntity.ok(
                 ApiResponse.success(
-                        "Profile updated successfully",
+                        AppConstant.PROFILE_UPDATED_SUCCEEDED,
                         response
                 )
         );

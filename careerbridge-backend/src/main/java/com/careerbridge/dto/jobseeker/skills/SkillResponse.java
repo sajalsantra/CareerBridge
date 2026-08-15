@@ -1,4 +1,4 @@
-package com.careerbridge.dto.jobseeker;
+package com.careerbridge.dto.jobseeker.skills;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

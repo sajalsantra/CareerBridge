@@ -1,16 +1,17 @@
-package com.careerbridge.service.impl;
+package com.careerbridge.service.impl.jobseeker;
 
-import com.careerbridge.dto.jobseeker.AddSkillRequest;
-import com.careerbridge.dto.jobseeker.SkillResponse;
-import com.careerbridge.dto.jobseeker.UpdateSkillRequest;
-import com.careerbridge.entity.JobSeekerProfile;
-import com.careerbridge.entity.JobSeekerSkill;
+import com.careerbridge.constant.AppConstant;
+import com.careerbridge.dto.jobseeker.skills.AddSkillRequest;
+import com.careerbridge.dto.jobseeker.skills.SkillResponse;
+import com.careerbridge.dto.jobseeker.skills.UpdateSkillRequest;
+import com.careerbridge.entity.jobseeker.JobSeekerProfile;
+import com.careerbridge.entity.jobseeker.JobSeekerSkill;
 import com.careerbridge.entity.Skill;
 import com.careerbridge.entity.User;
 import com.careerbridge.exception.DuplicateResourceException;
 import com.careerbridge.exception.ResourceNotFoundException;
-import com.careerbridge.repository.JobSeekerProfileRepository;
-import com.careerbridge.repository.JobSeekerSkillRepository;
+import com.careerbridge.repository.jobseeker.JobSeekerProfileRepository;
+import com.careerbridge.repository.jobseeker.JobSeekerSkillRepository;
 import com.careerbridge.repository.SkillRepository;
 import com.careerbridge.repository.UserRepository;
 import com.careerbridge.service.JobSeekerSkillService;
@@ -53,7 +54,7 @@ public class JobSeekerSkillServiceImpl
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "User not found"
+                                AppConstant.USER_NOT_FOUND
                         )
                 );
 
@@ -63,7 +64,7 @@ public class JobSeekerSkillServiceImpl
                         .findByUserId(user.getId())
                         .orElseThrow(() ->
                                 new ResourceNotFoundException(
-                                        "Job Seeker profile not found"
+                                        AppConstant.JOBSEEKER_PROFILE_NOT_FOUND
                                 )
                         );
 
@@ -72,7 +73,7 @@ public class JobSeekerSkillServiceImpl
                 .findById(request.getSkillId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "Skill not found"
+                                AppConstant.SKILL_NOT_FOUND
                         )
                 );
 
@@ -83,7 +84,7 @@ public class JobSeekerSkillServiceImpl
                         skill.getId())) {
 
             throw new DuplicateResourceException(
-                    "Skill already added to your profile"
+                    AppConstant.SKILL_ALREADY_EXISTS
             );
         }
 
@@ -118,7 +119,7 @@ public class JobSeekerSkillServiceImpl
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "User not found"
+                                AppConstant.USER_NOT_FOUND
                         )
                 );
 
@@ -128,7 +129,7 @@ public class JobSeekerSkillServiceImpl
                         .findByUserId(user.getId())
                         .orElseThrow(() ->
                                 new ResourceNotFoundException(
-                                        "Job Seeker profile not found"
+                                        AppConstant.JOBSEEKER_PROFILE_NOT_FOUND
                                 )
                         );
 
@@ -155,7 +156,7 @@ public class JobSeekerSkillServiceImpl
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "User not found"
+                                AppConstant.USER_NOT_FOUND
                         )
                 );
 
@@ -165,7 +166,7 @@ public class JobSeekerSkillServiceImpl
                         .findByUserId(user.getId())
                         .orElseThrow(() ->
                                 new ResourceNotFoundException(
-                                        "Job Seeker profile not found"
+                                        AppConstant.JOBSEEKER_PROFILE_NOT_FOUND
                                 )
                         );
 
@@ -178,7 +179,7 @@ public class JobSeekerSkillServiceImpl
                         )
                         .orElseThrow(() ->
                                 new ResourceNotFoundException(
-                                        "Skill not found in your profile"
+                                        AppConstant.SKILL_NOT_FOUND
                                 )
                         );
 
@@ -211,7 +212,7 @@ public class JobSeekerSkillServiceImpl
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "User not found"
+                                AppConstant.USER_NOT_FOUND
                         )
                 );
 
@@ -221,7 +222,7 @@ public class JobSeekerSkillServiceImpl
                         .findByUserId(user.getId())
                         .orElseThrow(() ->
                                 new ResourceNotFoundException(
-                                        "Job Seeker profile not found"
+                                        AppConstant.JOBSEEKER_PROFILE_NOT_FOUND
                                 )
                         );
 
@@ -234,7 +235,7 @@ public class JobSeekerSkillServiceImpl
                         )
                         .orElseThrow(() ->
                                 new ResourceNotFoundException(
-                                        "Skill not found in your profile"
+                                        AppConstant.SKILL_NOT_FOUND
                                 )
                         );
 

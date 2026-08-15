@@ -1,19 +1,20 @@
-package com.careerbridge.dto.jobseeker;
+package com.careerbridge.dto.jobseeker.skills;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
-public class UpdateSkillRequest {
+public class AddSkillRequest {
+
+    @NotNull(message = "Skill ID is required")
+    private Long skillId;
 
     @NotBlank(message = "Proficiency level is required")
-    @Size(
-            max = 50,
-            message = "Proficiency level cannot exceed 50 characters"
-    )
+    @Size(max = 50, message = "Proficiency level cannot exceed 50 characters")
     private String proficiencyLevel;
 
     @DecimalMin(
@@ -26,7 +27,15 @@ public class UpdateSkillRequest {
     )
     private BigDecimal yearsOfExperience;
 
-    public UpdateSkillRequest() {
+    public AddSkillRequest() {
+    }
+
+    public Long getSkillId() {
+        return skillId;
+    }
+
+    public void setSkillId(Long skillId) {
+        this.skillId = skillId;
     }
 
     public String getProficiencyLevel() {

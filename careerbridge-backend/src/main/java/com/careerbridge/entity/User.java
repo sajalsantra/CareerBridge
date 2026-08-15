@@ -1,5 +1,6 @@
 package com.careerbridge.entity;
 
+import com.careerbridge.entity.jobseeker.JobSeekerProfile;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

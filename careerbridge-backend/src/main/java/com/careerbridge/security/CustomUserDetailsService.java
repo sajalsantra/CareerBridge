@@ -1,5 +1,6 @@
 package com.careerbridge.security;
 
+import com.careerbridge.constant.AppConstant;
 import com.careerbridge.entity.User;
 import com.careerbridge.repository.UserRepository;
 
@@ -36,7 +37,7 @@ public class CustomUserDetailsService
                 )
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
-                                "User not found"
+                                AppConstant.USER_NOT_FOUND
                         )
                 );
 

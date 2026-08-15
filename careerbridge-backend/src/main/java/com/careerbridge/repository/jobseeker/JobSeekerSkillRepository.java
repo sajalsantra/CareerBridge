@@ -1,6 +1,6 @@
-package com.careerbridge.repository;
+package com.careerbridge.repository.jobseeker;
 
-import com.careerbridge.entity.JobSeekerSkill;
+import com.careerbridge.entity.jobseeker.JobSeekerSkill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
