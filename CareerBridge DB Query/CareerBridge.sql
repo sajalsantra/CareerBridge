@@ -12,20 +12,14 @@ CREATE DATABASE IF NOT EXISTS CareerBridge
 USE CareerBridge;
 
 
--- ============================================================
 -- 2. ROLES
--- ============================================================
-
 CREATE TABLE roles (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE
 );
 
 
--- ============================================================
 -- 3. USERS
--- ============================================================
-
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
@@ -44,10 +38,7 @@ CREATE TABLE users (
 );
 
 
--- ============================================================
 -- 4. USER ROLES
--- ============================================================
-
 CREATE TABLE user_roles (
     user_id BIGINT NOT NULL,
     role_id BIGINT NOT NULL,
@@ -66,10 +57,7 @@ CREATE TABLE user_roles (
 );
 
 
--- ============================================================
 -- 5. JOB SEEKER PROFILE
--- ============================================================
-
 CREATE TABLE job_seeker_profiles (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL UNIQUE,
@@ -99,10 +87,7 @@ CREATE TABLE job_seeker_profiles (
 );
 
 
--- ============================================================
 -- 6. SKILLS
--- ============================================================
-
 CREATE TABLE skills (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
@@ -110,10 +95,7 @@ CREATE TABLE skills (
 );
 
 
--- ============================================================
 -- 7. JOB SEEKER SKILLS
--- ============================================================
-
 CREATE TABLE job_seeker_skills (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_seeker_profile_id BIGINT NOT NULL,
@@ -136,9 +118,7 @@ CREATE TABLE job_seeker_skills (
 );
 
 
--- ============================================================
 -- 8. EDUCATION
--- ============================================================
 CREATE TABLE job_seeker_education (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_seeker_profile_id BIGINT NOT NULL,
@@ -159,35 +139,28 @@ CREATE TABLE job_seeker_education (
            REFERENCES job_seeker_profiles(id)
        ON DELETE CASCADE
 );
--- ============================================================
 -- 9. WORK EXPERIENCE
--- ============================================================
-
-CREATE TABLE experiences (
+CREATE TABLE job_seeker_work_experience (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_seeker_profile_id BIGINT NOT NULL,
-    company_name VARCHAR(200) NOT NULL,
     job_title VARCHAR(150) NOT NULL,
+    company_name VARCHAR(200) NOT NULL,
     employment_type VARCHAR(50),
-    location VARCHAR(150),
+    location VARCHAR(200),
     start_date DATE NOT NULL,
     end_date DATE,
-    currently_working BOOLEAN NOT NULL DEFAULT FALSE,
+    is_current BOOLEAN NOT NULL DEFAULT FALSE,
     description TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_experience_profile
-        FOREIGN KEY (job_seeker_profile_id)
-        REFERENCES job_seeker_profiles(id)
-        ON DELETE CASCADE
+    ON UPDATE CURRENT_TIMESTAMP,
+           CONSTRAINT fk_work_experience_profile
+           FOREIGN KEY (job_seeker_profile_id)
+           REFERENCES job_seeker_profiles(id)
+       ON DELETE CASCADE
 );
 
--- ============================================================
 -- 10. PROJECTS
--- ============================================================
-
 CREATE TABLE projects (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_seeker_profile_id BIGINT NOT NULL,
@@ -208,11 +181,7 @@ CREATE TABLE projects (
         ON DELETE CASCADE
 );
 
-
--- ============================================================
 -- 11. CERTIFICATIONS
--- ============================================================
-
 CREATE TABLE certifications (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_seeker_profile_id BIGINT NOT NULL,
@@ -233,11 +202,7 @@ CREATE TABLE certifications (
         ON DELETE CASCADE
 );
 
-
--- ============================================================
 -- 12. RESUMES
--- ============================================================
-
 CREATE TABLE resumes (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_seeker_profile_id BIGINT NOT NULL,
@@ -258,11 +223,7 @@ CREATE TABLE resumes (
         ON DELETE CASCADE
 );
 
-
--- ============================================================
 -- 13. JOB CATEGORIES
--- ============================================================
-
 CREATE TABLE job_categories (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
@@ -271,11 +232,7 @@ CREATE TABLE job_categories (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
--- ============================================================
 -- 14. JOBS
--- ============================================================
-
 CREATE TABLE jobs (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_title VARCHAR(200) NOT NULL,
@@ -307,11 +264,7 @@ CREATE TABLE jobs (
         ON DELETE SET NULL
 );
 
-
--- ============================================================
 -- 15. JOB SKILLS
--- ============================================================
-
 CREATE TABLE job_skills (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_id BIGINT NOT NULL,
@@ -333,11 +286,7 @@ CREATE TABLE job_skills (
         UNIQUE (job_id, skill_id)
 );
 
-
--- ============================================================
 -- 16. APPLICATIONS
--- ============================================================
-
 CREATE TABLE applications (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_id BIGINT NOT NULL,
@@ -370,11 +319,7 @@ CREATE TABLE applications (
         UNIQUE (job_id, job_seeker_profile_id)
 );
 
-
--- ============================================================
 -- 17. SAVED JOBS
--- ============================================================
-
 CREATE TABLE saved_jobs (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_id BIGINT NOT NULL,
@@ -395,11 +340,7 @@ CREATE TABLE saved_jobs (
         UNIQUE (job_id, job_seeker_profile_id)
 );
 
-
--- ============================================================
 -- 18. NOTIFICATIONS
--- ============================================================
-
 CREATE TABLE notifications (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
@@ -416,11 +357,7 @@ CREATE TABLE notifications (
         ON DELETE CASCADE
 );
 
-
--- ============================================================
 -- 19. JOB REPORTS
--- ============================================================
-
 CREATE TABLE job_reports (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_id BIGINT NOT NULL,
@@ -442,11 +379,7 @@ CREATE TABLE job_reports (
         ON DELETE CASCADE
 );
 
-
--- ============================================================
 -- 20. INDEXES
--- ============================================================
-
 CREATE INDEX idx_users_email
     ON users(email);
 
@@ -495,20 +428,14 @@ CREATE INDEX idx_notifications_read
 CREATE INDEX idx_reports_status
     ON job_reports(status);
 
-
--- ============================================================
 -- 21. INITIAL ROLES
--- ============================================================
 INSERT INTO roles (name)
 VALUES
     ('JOB_SEEKER'),
     ('RECRUITER'),
     ('ADMIN');
 
-
--- ============================================================
 -- 22. INITIAL JOB CATEGORIES
--- ============================================================
 INSERT INTO job_categories (name, description)
 VALUES
     ('Software Development', 'Software and application development jobs'),
@@ -525,10 +452,7 @@ VALUES
     ('Marketing', 'Marketing and digital marketing jobs');
 
 
--- ============================================================
 -- 23. INITIAL SKILLS
--- ============================================================
-
 INSERT INTO skills (name)
 VALUES
     ('Java'),
@@ -562,8 +486,5 @@ VALUES
     ('Data Structures'),
     ('Algorithms');
 
-
--- ============================================================
 -- 24. VERIFY TABLES
--- ============================================================
 SHOW TABLES;

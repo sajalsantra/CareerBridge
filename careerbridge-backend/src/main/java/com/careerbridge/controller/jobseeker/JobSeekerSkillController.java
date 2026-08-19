@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/job-seeker/skills")
+@RequestMapping(AppConstant.JOB_SEEKER_SKILL_BASE)
 public class JobSeekerSkillController {
 
     private final JobSeekerSkillService jobSeekerSkillService;

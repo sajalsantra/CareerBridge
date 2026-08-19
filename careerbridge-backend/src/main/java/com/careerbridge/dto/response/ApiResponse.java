@@ -8,10 +8,8 @@ public class ApiResponse<T> {
 
     private T data;
 
-
     public ApiResponse() {
     }
-
 
     public ApiResponse(
             boolean success,
@@ -23,6 +21,13 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
+    public static <T> ApiResponse<T> success(String message) {
+        return new ApiResponse<>(
+                true,
+                message,
+                null
+        );
+    }
 
     public static <T> ApiResponse<T> success(
             String message,
@@ -35,7 +40,6 @@ public class ApiResponse<T> {
         );
     }
 
-
     public static <T> ApiResponse<T> error(
             String message) {
 
@@ -46,7 +50,6 @@ public class ApiResponse<T> {
         );
     }
 
-
     public boolean isSuccess() {
         return success;
     }
@@ -55,7 +58,6 @@ public class ApiResponse<T> {
         this.success = success;
     }
 
-
     public String getMessage() {
         return message;
     }
@@ -63,7 +65,6 @@ public class ApiResponse<T> {
     public void setMessage(String message) {
         this.message = message;
     }
-
 
     public T getData() {
         return data;

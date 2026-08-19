@@ -14,7 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/job-seeker")
+@RequestMapping(AppConstant.JOB_SEEKER_PROFILE_BASE)
 public class JobSeekerProfileController {
 
     private final JobSeekerProfileService profileService;

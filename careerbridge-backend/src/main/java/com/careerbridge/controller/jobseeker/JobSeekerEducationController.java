@@ -5,6 +5,7 @@ import com.careerbridge.dto.error.ApiErrorResponse;
 import com.careerbridge.dto.jobseeker.education.AddEducationRequest;
 import com.careerbridge.dto.jobseeker.education.EducationResponse;
 import com.careerbridge.dto.jobseeker.education.UpdateEducationRequest;
+import com.careerbridge.dto.response.ApiResponse;
 import com.careerbridge.service.JobSeekerEducationService;
 
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/job-seeker/education")
+@RequestMapping(AppConstant.JOB_SEEKER_EDUCATION_BASE)
 public class JobSeekerEducationController {
 
     private final JobSeekerEducationService educationService;
@@ -99,7 +100,7 @@ public class JobSeekerEducationController {
 
     // 5. DELETE EDUCATION
     @DeleteMapping("/{educationId}")
-    public ResponseEntity<ApiErrorResponse> deleteEducation(
+    public ResponseEntity<ApiResponse> deleteEducation(
             @PathVariable Long educationId,
             Authentication authentication) {
 
@@ -111,8 +112,10 @@ public class JobSeekerEducationController {
         );
 
         return ResponseEntity.ok(
-                new ApiErrorResponse(
-                        AppConstant.EDUCATION_DELETE_SUCCEEDED
+                new ApiResponse(
+                        true,
+                        AppConstant.EDUCATION_DELETE_SUCCEEDED,
+                        null
                 )
         );
     }
