@@ -26,6 +26,7 @@ public class AppConstant {
     public static final String JOB_SEEKER_SKILL_BASE = "/api/job-seeker/skills";
     public static final String JOB_SEEKER_EDUCATION_BASE = "/api/job-seeker/education";
     public static final String JOB_SEEKER_EXPERIENCE_BASE = "/api/job-seeker/experience";
+    public static final String JOB_SEEKER_RESUME_BASE = "/api/job-seeker/resume";
 
     // Massage
     public final static String REGISTRATION_SUCCEEDED = "Registration successful";
@@ -51,6 +52,16 @@ public class AppConstant {
     public final static String EXPERIENCE_ALREADY_EXISTS = "Experience already exists";
     public final static String EXPERIENCE_UPDATED = "Experience updated successfully.";
     public final static String EXPERIENCE_DELETED = "Experience deleted successfully.";
+    public final static String RESUME_DELETE_SUCCEEDED = "Resume deleted successfully.";
+    public final static String RESUME_NOT_FOUND = "Resume not found.";
+    public final static String RESUME_REQUEST_REQUIRED= "Resume request is required.";
+    public final static String RESUME_NAME_REQUIRED= "Resume name is required.";
+    public final static String RESUME_FILE_DATA_REQUIRED= "Resume file data is required.";
+    public final static String FILE_NAME_REQUIRED= "File name is required.";
+    public final static String FILE_TYPE_REQUIRED= "File type is required.";
+    public final static String SUPPORT_FILE_TYPE= "Only PDF, DOC and DOCX resume files are allowed.";
+    public final static String INVALID_BASE64_DATA= "Invalid Base64 resume data.";
+    public final static String INVALID_FILE_SIZE= "Resume file size must not exceed 5 MB.";
 
 
 }

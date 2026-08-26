@@ -203,24 +203,23 @@ CREATE TABLE certifications (
 );
 
 -- 12. RESUMES
-CREATE TABLE resumes (
+CREATE TABLE resumes(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_seeker_profile_id BIGINT NOT NULL,
     resume_name VARCHAR(255) NOT NULL,
     original_file_name VARCHAR(255),
-    file_path VARCHAR(500) NOT NULL,
     file_type VARCHAR(100),
     file_size BIGINT,
+    file_data LONGTEXT NOT NULL,
     is_primary BOOLEAN NOT NULL DEFAULT FALSE,
     uploaded_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_resume_profile
-        FOREIGN KEY (job_seeker_profile_id)
-        REFERENCES job_seeker_profiles(id)
-        ON DELETE CASCADE
+    ON UPDATE CURRENT_TIMESTAMP,
+           CONSTRAINT fk_resume_profile
+           FOREIGN KEY (job_seeker_profile_id)
+           REFERENCES job_seeker_profiles(id)
+       ON DELETE CASCADE
 );
 
 -- 13. JOB CATEGORIES
