@@ -32,8 +32,7 @@ public class RecruiterProfileController {
     getMyProfile(
             Authentication authentication) {
 
-        String username =
-                authentication.getName();
+        String username = authentication.getName();
 
         RecruiterProfileResponse response =
                 recruiterProfileService.getMyProfile(
@@ -56,8 +55,7 @@ public class RecruiterProfileController {
 
             Authentication authentication) {
 
-        String username =
-                authentication.getName();
+        String username = authentication.getName();
 
         RecruiterProfileResponse response =
                 recruiterProfileService.updateMyProfile(

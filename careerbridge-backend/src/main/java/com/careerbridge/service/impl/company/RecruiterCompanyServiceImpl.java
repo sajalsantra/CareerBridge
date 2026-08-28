@@ -3,6 +3,7 @@ package com.careerbridge.service.impl.company;
 import com.careerbridge.constant.AppConstant;
 import com.careerbridge.dto.company.CompanyResponse;
 import com.careerbridge.dto.company.CreateCompanyRequest;
+import com.careerbridge.dto.company.UpdateCompanyRequest;
 import com.careerbridge.entity.User;
 import com.careerbridge.entity.recruiter.RecruiterProfile;
 import com.careerbridge.entity.company.Company;
@@ -150,7 +151,7 @@ public class RecruiterCompanyServiceImpl
     @Transactional
     public CompanyResponse updateCompany(
             String username,
-            CreateCompanyRequest request
+            UpdateCompanyRequest request
     ) {
         User user = getUser(username);
 
@@ -162,14 +163,12 @@ public class RecruiterCompanyServiceImpl
         Company company = recruiterProfile.getCompany();
 
         if(company == null){
-
             throw new ResourceNotFoundException(
                     AppConstant.COMPANY_NOT_FOUND
             );
         }
 
         if(request.getCompanyName()!=null){
-
             company.setCompanyName(
                     request.getCompanyName()
             );
@@ -233,7 +232,35 @@ public class RecruiterCompanyServiceImpl
                 updatedCompany
         );
     }
+    // SELECT COMPANY
+    @Override
+    @Transactional
+    public CompanyResponse selectCompany(
+            String username,
+            Long companyId
+    ) {
 
+        User user = getUser(username);
+
+        RecruiterProfile recruiterProfile =
+                getRecruiterProfile(user.getId());
+
+        Company company =
+                companyRepository.findById(companyId)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Company not found."
+                                )
+                        );
+
+        recruiterProfile.setCompany(company);
+
+        recruiterProfileRepository.save(
+                recruiterProfile
+        );
+
+        return mapToResponse(company);
+    }
 
     // FIND USER
     private User getUser(

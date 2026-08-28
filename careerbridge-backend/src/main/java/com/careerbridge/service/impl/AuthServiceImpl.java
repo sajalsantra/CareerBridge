@@ -9,12 +9,14 @@ import com.careerbridge.entity.Role;
 import com.careerbridge.entity.User;
 import com.careerbridge.entity.UserRole;
 import com.careerbridge.entity.UserRoleId;
+import com.careerbridge.entity.recruiter.RecruiterProfile;
 import com.careerbridge.exception.DuplicateResourceException;
 import com.careerbridge.exception.ResourceNotFoundException;
 import com.careerbridge.repository.jobseeker.JobSeekerProfileRepository;
 import com.careerbridge.repository.RoleRepository;
 import com.careerbridge.repository.UserRepository;
 import com.careerbridge.repository.UserRoleRepository;
+import com.careerbridge.repository.recruiter.RecruiterProfileRepository;
 import com.careerbridge.security.JwtService;
 import com.careerbridge.service.AuthService;
 
@@ -36,16 +38,19 @@ public class AuthServiceImpl implements AuthService {
     private final RoleRepository roleRepository;
     private final UserRoleRepository userRoleRepository;
     private final JobSeekerProfileRepository jobSeekerProfileRepository;
+    private final RecruiterProfileRepository recruiterProfileRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+
 
     public AuthServiceImpl(
             UserRepository userRepository,
             RoleRepository roleRepository,
             UserRoleRepository userRoleRepository,
             JobSeekerProfileRepository jobSeekerProfileRepository,
+            RecruiterProfileRepository recruiterProfileRepository, RecruiterProfileRepository recruiterProfileRepository1,
             PasswordEncoder passwordEncoder,
             AuthenticationManager authenticationManager,
             JwtService jwtService,
@@ -55,6 +60,7 @@ public class AuthServiceImpl implements AuthService {
         this.roleRepository = roleRepository;
         this.userRoleRepository = userRoleRepository;
         this.jobSeekerProfileRepository = jobSeekerProfileRepository;
+        this.recruiterProfileRepository = recruiterProfileRepository1;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
@@ -74,6 +80,7 @@ public class AuthServiceImpl implements AuthService {
             );
         }
 
+
         // 2. Check email
         if (userRepository.existsByEmail(
                 request.getEmail())) {
@@ -83,8 +90,10 @@ public class AuthServiceImpl implements AuthService {
             );
         }
 
+
         // 3. Validate registration role
-        String roleName = request.getRole();
+        String roleName =
+                request.getRole();
 
         if (!"JOB_SEEKER".equals(roleName)
                 && !"RECRUITER".equals(roleName)) {
@@ -94,22 +103,38 @@ public class AuthServiceImpl implements AuthService {
             );
         }
 
+
         // 4. Find role
-        Role jobSeekerRole = roleRepository
-                .findByName(roleName)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Role not found: " + roleName
-                        )
-                );
+        Role role =
+                roleRepository
+                        .findByName(roleName)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Role not found: " + roleName
+                                )
+                        );
+
 
         // 5. Create User
-        User user = new User();
+        User user =
+                new User();
 
-        user.setUsername(request.getUsername());
-        user.setFullName(request.getFullName());
-        user.setEmail(request.getEmail());
-        user.setPhone(request.getPhone());
+        user.setUsername(
+                request.getUsername()
+        );
+
+        user.setFullName(
+                request.getFullName()
+        );
+
+        user.setEmail(
+                request.getEmail()
+        );
+
+        user.setPhone(
+                request.getPhone()
+        );
+
 
         // 6. Encrypt password
         user.setPassword(
@@ -121,33 +146,38 @@ public class AuthServiceImpl implements AuthService {
         user.setActive(true);
         user.setEmailVerified(false);
 
+
         // 7. Save User
-        User savedUser =
-                userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
 
         // 8. Create UserRole
         UserRole userRole = new UserRole();
-
         userRole.setUser(savedUser);
-        userRole.setRole(jobSeekerRole);
-
+        userRole.setRole(role);
         userRole.setId(
                 new UserRoleId(
                         savedUser.getId(),
-                        jobSeekerRole.getId()
+                        role.getId()
                 )
         );
 
         userRoleRepository.save(userRole);
 
-        // 9. Create Job Seeker Profile
-        JobSeekerProfile profile =
-                new JobSeekerProfile();
 
-        profile.setUser(savedUser);
-        profile.setProfileCompletionPercentage(0);
+        // 9. Create profile according to role
+        if ("JOB_SEEKER".equals(roleName)) {
+            JobSeekerProfile profile = new JobSeekerProfile();
+            profile.setUser(savedUser);
+            profile.setProfileCompletionPercentage(0);
+            jobSeekerProfileRepository.save(profile);
+        }
 
-        jobSeekerProfileRepository.save(profile);
+        if ("RECRUITER".equals(roleName)) {
+            RecruiterProfile profile = new RecruiterProfile();
+            profile.setUser(savedUser);
+            recruiterProfileRepository.save(profile);
+        }
     }
 
     @Override

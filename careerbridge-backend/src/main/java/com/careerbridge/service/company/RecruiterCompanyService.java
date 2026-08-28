@@ -2,6 +2,7 @@ package com.careerbridge.service.company;
 
 import com.careerbridge.dto.company.CompanyResponse;
 import com.careerbridge.dto.company.CreateCompanyRequest;
+import com.careerbridge.dto.company.UpdateCompanyRequest;
 
 public interface RecruiterCompanyService {
 
@@ -16,7 +17,11 @@ public interface RecruiterCompanyService {
 
     CompanyResponse updateCompany(
             String username,
-            CreateCompanyRequest request
+            UpdateCompanyRequest request
     );
 
+    CompanyResponse selectCompany(
+            String username,
+            Long companyId
+    );
 }

@@ -4,6 +4,7 @@ package com.careerbridge.controller.recruiter;
 import com.careerbridge.constant.AppConstant;
 import com.careerbridge.dto.company.CompanyResponse;
 import com.careerbridge.dto.company.CreateCompanyRequest;
+import com.careerbridge.dto.company.UpdateCompanyRequest;
 import com.careerbridge.service.company.RecruiterCompanyService;
 
 import jakarta.validation.Valid;
@@ -68,7 +69,7 @@ public class RecruiterCompanyController {
     public ResponseEntity<CompanyResponse> updateCompany(
             @Valid
             @RequestBody
-            CreateCompanyRequest request,
+            UpdateCompanyRequest request,
             Authentication authentication
     ){
         String username = authentication.getName();
@@ -81,4 +82,20 @@ public class RecruiterCompanyController {
         );
     }
 
+    // UPDATE COMPANY USING ID
+    @PutMapping("/{companyId}")
+    public ResponseEntity<CompanyResponse> selectCompany(
+
+            @PathVariable Long companyId,
+            Authentication authentication
+    ) {
+        String username = authentication.getName();
+
+        return ResponseEntity.ok(
+                recruiterCompanyService.selectCompany(
+                        username,
+                        companyId
+                )
+        );
+    }
 }
