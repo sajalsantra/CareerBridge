@@ -83,16 +83,27 @@ public class AuthServiceImpl implements AuthService {
             );
         }
 
-        // 3. Find JOB_SEEKER role
+        // 3. Validate registration role
+        String roleName = request.getRole();
+
+        if (!"JOB_SEEKER".equals(roleName)
+                && !"RECRUITER".equals(roleName)) {
+
+            throw new IllegalArgumentException(
+                    "Only JOB_SEEKER or RECRUITER can register"
+            );
+        }
+
+        // 4. Find role
         Role jobSeekerRole = roleRepository
-                .findByName("JOB_SEEKER")
+                .findByName(roleName)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "JOB_SEEKER role not found"
+                                "Role not found: " + roleName
                         )
                 );
 
-        // 4. Create User
+        // 5. Create User
         User user = new User();
 
         user.setUsername(request.getUsername());
@@ -100,7 +111,7 @@ public class AuthServiceImpl implements AuthService {
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
 
-        // 5. Encrypt password
+        // 6. Encrypt password
         user.setPassword(
                 passwordEncoder.encode(
                         request.getPassword()
@@ -110,11 +121,11 @@ public class AuthServiceImpl implements AuthService {
         user.setActive(true);
         user.setEmailVerified(false);
 
-        // 6. Save User
+        // 7. Save User
         User savedUser =
                 userRepository.save(user);
 
-        // 7. Create UserRole
+        // 8. Create UserRole
         UserRole userRole = new UserRole();
 
         userRole.setUser(savedUser);
@@ -129,7 +140,7 @@ public class AuthServiceImpl implements AuthService {
 
         userRoleRepository.save(userRole);
 
-        // 8. Create Job Seeker Profile
+        // 9. Create Job Seeker Profile
         JobSeekerProfile profile =
                 new JobSeekerProfile();
 

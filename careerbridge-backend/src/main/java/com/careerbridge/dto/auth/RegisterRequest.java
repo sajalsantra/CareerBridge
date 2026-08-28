@@ -35,6 +35,7 @@ public class RegisterRequest {
             message = "Password must be between 8 and 100 characters"
     )
     private String password;
+    private String role;
 
     public RegisterRequest() {
     }
@@ -77,5 +78,13 @@ public class RegisterRequest {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

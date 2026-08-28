@@ -1,4 +1,4 @@
-package com.careerbridge.service;
+package com.careerbridge.service.jobseeker;
 
 import com.careerbridge.dto.jobseeker.education.AddEducationRequest;
 import com.careerbridge.dto.jobseeker.education.EducationResponse;

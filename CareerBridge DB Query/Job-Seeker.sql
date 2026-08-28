@@ -139,6 +139,7 @@ CREATE TABLE job_seeker_education (
            REFERENCES job_seeker_profiles(id)
        ON DELETE CASCADE
 );
+
 -- 9. WORK EXPERIENCE
 CREATE TABLE job_seeker_work_experience (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -161,7 +162,7 @@ CREATE TABLE job_seeker_work_experience (
 );
 
 -- 10. PROJECTS
-CREATE TABLE projects (
+CREATE TABLE job_seeker_projects (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_seeker_profile_id BIGINT NOT NULL,
     project_name VARCHAR(200) NOT NULL,
@@ -182,7 +183,7 @@ CREATE TABLE projects (
 );
 
 -- 11. CERTIFICATIONS
-CREATE TABLE certifications (
+CREATE TABLE job_seeker_certifications (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_seeker_profile_id BIGINT NOT NULL,
     certification_name VARCHAR(200) NOT NULL,
@@ -203,7 +204,7 @@ CREATE TABLE certifications (
 );
 
 -- 12. RESUMES
-CREATE TABLE resumes(
+CREATE TABLE job_seeker_resumes(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_seeker_profile_id BIGINT NOT NULL,
     resume_name VARCHAR(255) NOT NULL,

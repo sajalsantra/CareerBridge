@@ -8,7 +8,7 @@ import com.careerbridge.entity.User;
 import com.careerbridge.exception.ResourceNotFoundException;
 import com.careerbridge.repository.jobseeker.JobSeekerProfileRepository;
 import com.careerbridge.repository.UserRepository;
-import com.careerbridge.service.JobSeekerProfileService;
+import com.careerbridge.service.jobseeker.JobSeekerProfileService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

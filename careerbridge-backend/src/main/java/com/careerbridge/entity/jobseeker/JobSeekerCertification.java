@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "certifications")
+@Table(name = "job_seeker_certifications")
 public class JobSeekerCertification {
 
     @Id
@@ -64,7 +64,6 @@ public class JobSeekerCertification {
     )
     private LocalDateTime updatedAt;
 
-
     @PrePersist
     protected void onCreate() {
 
@@ -74,7 +73,6 @@ public class JobSeekerCertification {
         createdAt = now;
         updatedAt = now;
     }
-
 
     @PreUpdate
     protected void onUpdate() {

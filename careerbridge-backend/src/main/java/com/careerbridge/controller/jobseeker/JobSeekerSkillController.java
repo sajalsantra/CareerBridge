@@ -5,7 +5,7 @@ import com.careerbridge.dto.error.ApiErrorResponse;
 import com.careerbridge.dto.jobseeker.skills.AddSkillRequest;
 import com.careerbridge.dto.jobseeker.skills.SkillResponse;
 import com.careerbridge.dto.jobseeker.skills.UpdateSkillRequest;
-import com.careerbridge.service.JobSeekerSkillService;
+import com.careerbridge.service.jobseeker.JobSeekerSkillService;
 
 import jakarta.validation.Valid;
 

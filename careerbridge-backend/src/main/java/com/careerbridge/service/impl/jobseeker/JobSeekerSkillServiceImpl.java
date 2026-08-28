@@ -14,7 +14,7 @@ import com.careerbridge.repository.jobseeker.JobSeekerProfileRepository;
 import com.careerbridge.repository.jobseeker.JobSeekerSkillRepository;
 import com.careerbridge.repository.SkillRepository;
 import com.careerbridge.repository.UserRepository;
-import com.careerbridge.service.JobSeekerSkillService;
+import com.careerbridge.service.jobseeker.JobSeekerSkillService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

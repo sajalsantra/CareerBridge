@@ -5,7 +5,7 @@ import com.careerbridge.dto.jobseeker.certification.AddCertificationRequest;
 import com.careerbridge.dto.jobseeker.certification.CertificationResponse;
 import com.careerbridge.dto.jobseeker.certification.UpdateCertificationRequest;
 import com.careerbridge.dto.response.ApiResponse;
-import com.careerbridge.service.JobSeekerCertificationService;
+import com.careerbridge.service.jobseeker.JobSeekerCertificationService;
 
 import jakarta.validation.Valid;
 

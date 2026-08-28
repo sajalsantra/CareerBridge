@@ -1,4 +1,4 @@
-package com.careerbridge.service.impl;
+package com.careerbridge.service.impl.jobseeker;
 
 import com.careerbridge.constant.AppConstant;
 import com.careerbridge.dto.resume.ResumeResponse;
@@ -11,7 +11,7 @@ import com.careerbridge.exception.ResourceNotFoundException;
 import com.careerbridge.repository.jobseeker.JobSeekerResumeRepository;
 import com.careerbridge.repository.UserRepository;
 import com.careerbridge.repository.jobseeker.JobSeekerProfileRepository;
-import com.careerbridge.service.JobSeekerResumeService;
+import com.careerbridge.service.jobseeker.JobSeekerResumeService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

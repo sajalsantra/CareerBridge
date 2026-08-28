@@ -1,12 +1,11 @@
 package com.careerbridge.controller.jobseeker;
 
 import com.careerbridge.constant.AppConstant;
-import com.careerbridge.dto.error.ApiErrorResponse;
 import com.careerbridge.dto.jobseeker.education.AddEducationRequest;
 import com.careerbridge.dto.jobseeker.education.EducationResponse;
 import com.careerbridge.dto.jobseeker.education.UpdateEducationRequest;
 import com.careerbridge.dto.response.ApiResponse;
-import com.careerbridge.service.JobSeekerEducationService;
+import com.careerbridge.service.jobseeker.JobSeekerEducationService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

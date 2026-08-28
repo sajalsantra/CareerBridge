@@ -5,7 +5,7 @@ import com.careerbridge.dto.response.ApiResponse;
 import com.careerbridge.dto.resume.ResumeResponse;
 import com.careerbridge.dto.resume.UpdateResumeRequest;
 import com.careerbridge.dto.resume.UploadResumeRequest;
-import com.careerbridge.service.JobSeekerResumeService;
+import com.careerbridge.service.jobseeker.JobSeekerResumeService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

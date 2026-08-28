@@ -4,7 +4,7 @@ import com.careerbridge.constant.AppConstant;
 import com.careerbridge.dto.jobseeker.profile.JobSeekerProfileResponse;
 import com.careerbridge.dto.jobseeker.profile.UpdateJobSeekerProfileRequest;
 import com.careerbridge.dto.response.ApiResponse;
-import com.careerbridge.service.JobSeekerProfileService;
+import com.careerbridge.service.jobseeker.JobSeekerProfileService;
 
 import jakarta.validation.Valid;
 
@@ -14,7 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(AppConstant.JOB_SEEKER_PROFILE_BASE)
+@RequestMapping(AppConstant.JOB_SEEKER_BASE)
 public class JobSeekerProfileController {
 
     private final JobSeekerProfileService profileService;

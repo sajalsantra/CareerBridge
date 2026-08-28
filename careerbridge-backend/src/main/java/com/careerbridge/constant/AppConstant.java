@@ -22,12 +22,15 @@ public class AppConstant {
 
     // API Endpoints
     public static final String AUTH_BASE = "/api/auth";
-    public static final String JOB_SEEKER_PROFILE_BASE = "/api/job-seeker";
+    public static final String JOB_SEEKER_BASE = "/api/job-seeker";
+    public static final String RECRUITER_BASE = "/api/recruiter";
     public static final String JOB_SEEKER_SKILL_BASE = "/api/job-seeker/skills";
     public static final String JOB_SEEKER_EDUCATION_BASE = "/api/job-seeker/education";
     public static final String JOB_SEEKER_EXPERIENCE_BASE = "/api/job-seeker/experience";
     public static final String JOB_SEEKER_RESUME_BASE = "/api/job-seeker/resume";
     public static final String JOB_SEEKER_CERTIFICATION_BASE = "/api/job-seeker/certification";
+    public static final String JOB_SEEKER_PROJECT_BASE = "/api/job-seeker/project";
+    public static final String RECRUITER_COMPANY = "/api/recruiter/company";
 
     // Massage
     public final static String REGISTRATION_SUCCEEDED = "Registration successful";
@@ -67,6 +70,13 @@ public class AppConstant {
     public final static String INVALID_EXPIRY_DATE = "Expiry date cannot be before issue date.";
     public final static String INVALID_CERTIFICATE_URL = "Credential URL must start with http:// or https://.";
     public final static String CERTIFICATE_DELETED = "Certification deleted successfully.";
+    public final static String PROJECT_NOT_FOUND = "Project not found.";
+    public final static String INVALID_PROJECT_END_DATE = "End date cannot be before start date.";
+    public final static String INVALID_PROJECT_URL = "Project URL must start with http:// or https://.";
+    public final static String PROjECT_DELETE_SUCCEEDED = "Project deleted successfully.";
+    public final static String RECRUITER_PROFILE_NOT_FOUND = "Recruiter profile not found.";
+    public final static String COMPANY_ALREADY_EXIST = "Company already created.";
+    public final static String COMPANY_NOT_FOUND = "Company not found.";
 
 
 }

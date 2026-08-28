@@ -5,7 +5,7 @@ import com.careerbridge.dto.jobseeker.experience.AddExperienceRequest;
 import com.careerbridge.dto.jobseeker.experience.ExperienceResponse;
 import com.careerbridge.dto.jobseeker.experience.UpdateExperienceRequest;
 import com.careerbridge.dto.response.ApiResponse;
-import com.careerbridge.service.JobSeekerExperienceService;
+import com.careerbridge.service.jobseeker.JobSeekerExperienceService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

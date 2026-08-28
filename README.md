@@ -72,7 +72,8 @@ A Job Seeker can build their profile with:
 - Preferred location
 - Job type preference
 - Work mode preference
-  **🛠️ Skills**
+
+**🛠️ Skills**
 
 Job Seekers can add their technical and professional skills along with:
 
@@ -215,15 +216,18 @@ Authentication
 Job Seeker
     ├── Profile
     ├── Skills
-    └── Education
+    ├── Education
+    ├── Experience
+    ├── Projects
+    ├── Resume
+    └── Certification
+    
 ```
 
 **🔨 Currently Developing**
 
 ```
 Job Seeker
-    ├── Work Experience
-    ├── Resume Management
     ├── Job Search
     ├── Job Filtering
     ├── Job Applications

@@ -12,7 +12,7 @@ import com.careerbridge.exception.ResourceNotFoundException;
 import com.careerbridge.repository.UserRepository;
 import com.careerbridge.repository.jobseeker.JobSeekerExperienceRepository;
 import com.careerbridge.repository.jobseeker.JobSeekerProfileRepository;
-import com.careerbridge.service.JobSeekerExperienceService;
+import com.careerbridge.service.jobseeker.JobSeekerExperienceService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
