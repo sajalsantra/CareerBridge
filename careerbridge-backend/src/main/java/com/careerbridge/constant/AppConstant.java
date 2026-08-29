@@ -77,6 +77,7 @@ public class AppConstant {
     public final static String RECRUITER_PROFILE_NOT_FOUND = "Recruiter profile not found.";
     public final static String COMPANY_ALREADY_EXIST = "Company already created.";
     public final static String COMPANY_NOT_FOUND = "Company not found.";
+    public final static String DUPLICATE_COMPANY_FOUND = "Another company with this name already exists.";
 
 
 }

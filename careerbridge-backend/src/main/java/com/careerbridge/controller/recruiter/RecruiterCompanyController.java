@@ -23,8 +23,7 @@ public class RecruiterCompanyController {
     public RecruiterCompanyController(
             RecruiterCompanyService recruiterCompanyService
     ){
-        this.recruiterCompanyService =
-                recruiterCompanyService;
+        this.recruiterCompanyService = recruiterCompanyService;
     }
 
     // CREATE COMPANY

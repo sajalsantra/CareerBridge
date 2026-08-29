@@ -15,15 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(AppConstant.RECRUITER_BASE)
 public class RecruiterProfileController {
 
-    private final RecruiterProfileService
-            recruiterProfileService;
+    private final RecruiterProfileService recruiterProfileService;
 
 
     public RecruiterProfileController(
             RecruiterProfileService recruiterProfileService) {
 
-        this.recruiterProfileService =
-                recruiterProfileService;
+        this.recruiterProfileService = recruiterProfileService;
     }
 
     // GET MY PROFILE

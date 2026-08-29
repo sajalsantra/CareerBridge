@@ -3,9 +3,11 @@ package com.careerbridge.service.impl.recruiter;
 import com.careerbridge.constant.AppConstant;
 import com.careerbridge.dto.recruiter.profile.RecruiterProfileResponse;
 import com.careerbridge.dto.recruiter.profile.UpdateRecruiterProfileRequest;
+import com.careerbridge.entity.company.Company;
 import com.careerbridge.entity.recruiter.RecruiterProfile;
 import com.careerbridge.entity.User;
 import com.careerbridge.exception.ResourceNotFoundException;
+import com.careerbridge.repository.company.CompanyRepository;
 import com.careerbridge.repository.recruiter.RecruiterProfileRepository;
 import com.careerbridge.repository.UserRepository;
 import com.careerbridge.service.recruiter.RecruiterProfileService;
@@ -18,17 +20,19 @@ public class RecruiterProfileServiceImpl
         implements RecruiterProfileService {
 
     private final UserRepository userRepository;
+    private final CompanyRepository companyRepository;
 
     private final RecruiterProfileRepository recruiterProfileRepository;
 
 
     public RecruiterProfileServiceImpl(
             UserRepository userRepository,
-            RecruiterProfileRepository recruiterProfileRepository) {
+            RecruiterProfileRepository recruiterProfileRepository,
+            CompanyRepository companyRepository) {
 
         this.userRepository = userRepository;
-
         this.recruiterProfileRepository = recruiterProfileRepository;
+        this.companyRepository = companyRepository;
     }
 
     // GET MY PROFILE
@@ -58,26 +62,18 @@ public class RecruiterProfileServiceImpl
 
         RecruiterProfile profile = getRecruiterProfile(user.getId());
 
-
-        // Designation
+        // Update recruiter profile
         if (request.getDesignation() != null) {
-
             String designation = request.getDesignation().trim();
-
             if (!designation.isEmpty()) {
-
                 profile.setDesignation(
                         designation
                 );
             }
         }
 
-
-        // Bio
         if (request.getBio() != null) {
-
             String bio = request.getBio().trim();
-
             profile.setBio(
                     bio.isEmpty()
                             ? null
@@ -85,18 +81,37 @@ public class RecruiterProfileServiceImpl
             );
         }
 
-
-        // Location
         if (request.getLocation() != null) {
-
             String location = request.getLocation().trim();
-
             if (!location.isEmpty()) {
-
                 profile.setLocation(
                         location
                 );
             }
+        }
+
+        if (request.getCompanyId() != null) {
+            Company company = companyRepository.findById(
+                                    request.getCompanyId()
+                            )
+                            .orElseThrow(() ->
+                                    new ResourceNotFoundException(
+                                            "Company not found."
+                                    )
+                            );
+            profile.setCompany(company);
+        }
+
+        if (request.getCompanyName() != null) {
+            Company company = companyRepository.findByCompanyNameIgnoreCase(
+                            request.getCompanyName()
+                    )
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException(
+                                    "Company not found."
+                            )
+                    );
+            profile.setCompany(company);
         }
 
 

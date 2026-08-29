@@ -17,6 +17,8 @@ import com.careerbridge.service.company.RecruiterCompanyService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class RecruiterCompanyServiceImpl
         implements RecruiterCompanyService {
@@ -39,35 +41,51 @@ public class RecruiterCompanyServiceImpl
                 recruiterProfileRepository;
     }
 
-    // CREATE COMPANY    @Override
+    // CREATE COMPANY
+    @Override
     @Transactional
     public CompanyResponse createCompany(
             String username,
             CreateCompanyRequest request
     ) {
+
+        // 1. Get logged-in user
         User user = getUser(username);
 
-        RecruiterProfile recruiterProfile =
-                getRecruiterProfile(
-                        user.getId()
-                );
+        // 2. Get recruiter profile
+        RecruiterProfile recruiterProfile = getRecruiterProfile(user.getId());
 
+
+        // 3. Check whether recruiter already has a company
         if (recruiterProfile.getCompany() != null) {
             throw new DuplicateResourceException(
-                    AppConstant.COMPANY_ALREADY_EXIST
+                    "You are already associated with a company."
             );
         }
 
-        if (companyRepository
-                .existsByCompanyNameIgnoreCase(
-                        request.getCompanyName()
-                )) {
+        // 4. Check whether company already exists
+        Optional<Company> existingCompany =
+                companyRepository
+                        .findByCompanyNameIgnoreCase(
+                                request.getCompanyName()
+                        );
 
-            throw new DuplicateResourceException(
-                    AppConstant.COMPANY_ALREADY_EXIST
+        // COMPANY ALREADY EXISTS
+        if (existingCompany.isPresent()) {
+
+            Company company = existingCompany.get();
+
+            // Map existing company to recruiter profile
+            recruiterProfile.setCompany(company);
+
+            recruiterProfileRepository.save(
+                    recruiterProfile
             );
+
+            return mapToResponse(company);
         }
 
+        // COMPANY DOES NOT EXIST
         Company company = new Company();
 
         company.setCompanyName(
@@ -102,11 +120,11 @@ public class RecruiterCompanyServiceImpl
                 request.getFoundedYear()
         );
 
-        Company savedCompany =
-                companyRepository.save(
-                        company
-                );
+        // Save new company
+        Company savedCompany = companyRepository.save(company);
 
+
+        // Map company to recruiter
         recruiterProfile.setCompany(
                 savedCompany
         );
@@ -168,10 +186,31 @@ public class RecruiterCompanyServiceImpl
             );
         }
 
-        if(request.getCompanyName()!=null){
-            company.setCompanyName(
-                    request.getCompanyName()
-            );
+        if (request.getCompanyName() != null) {
+
+            String newCompanyName = request.getCompanyName().trim();
+
+            if (!newCompanyName.equalsIgnoreCase(
+                    company.getCompanyName()
+            )) {
+
+                Optional<Company> existingCompany =
+                        companyRepository
+                                .findByCompanyNameIgnoreCase(
+                                        newCompanyName
+                                );
+
+
+                if (existingCompany.isPresent()) {
+                    throw new DuplicateResourceException(
+                            AppConstant.DUPLICATE_COMPANY_FOUND
+                    );
+                }
+
+                company.setCompanyName(
+                        newCompanyName
+                );
+            }
         }
 
         if(request.getDescription()!=null){
@@ -249,7 +288,7 @@ public class RecruiterCompanyServiceImpl
                 companyRepository.findById(companyId)
                         .orElseThrow(() ->
                                 new ResourceNotFoundException(
-                                        "Company not found."
+                                        AppConstant.COMPANY_NOT_FOUND
                                 )
                         );
 
