@@ -95,6 +95,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/health")
                         .permitAll()
 
+                        .requestMatchers("/api/jobs/**")
+                        .permitAll()
+
                         // Job Seeker APIs
                         .requestMatchers("/api/job-seeker/**")
                         .hasRole("JOB_SEEKER")

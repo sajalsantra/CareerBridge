@@ -18,7 +18,8 @@ import org.springframework.context.annotation.ComponentScan;
 		"com.careerbridge.constants",
 		"com.careerbridge.dto",
 		"com.careerbridge.security",
-		"com.careerbridge.exception"
+		"com.careerbridge.exception",
+		"com.careerbridge.specification"
 })
 public class CareerbridgeApplication extends SpringBootServletInitializer {
 

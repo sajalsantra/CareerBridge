@@ -24,6 +24,7 @@ public class AppConstant {
     public static final String AUTH_BASE = "/api/auth";
     public static final String JOB_SEEKER_BASE = "/api/job-seeker";
     public static final String RECRUITER_BASE = "/api/recruiter";
+    public static final String JOBS_API_BASE = "/api/jobs/";
     public static final String JOB_SEEKER_SKILL_BASE = "/api/job-seeker/skills";
     public static final String JOB_SEEKER_EDUCATION_BASE = "/api/job-seeker/education";
     public static final String JOB_SEEKER_EXPERIENCE_BASE = "/api/job-seeker/experience";
@@ -31,6 +32,7 @@ public class AppConstant {
     public static final String JOB_SEEKER_CERTIFICATION_BASE = "/api/job-seeker/certification";
     public static final String JOB_SEEKER_PROJECT_BASE = "/api/job-seeker/project";
     public static final String RECRUITER_COMPANY = "/api/recruiter/company";
+    public static final String RECRUITER_JOB_BASE = "/api/recruiter/jobs";
 
     // Massage
     public final static String REGISTRATION_SUCCEEDED = "Registration successful";
@@ -78,6 +80,17 @@ public class AppConstant {
     public final static String COMPANY_ALREADY_EXIST = "Company already created.";
     public final static String COMPANY_NOT_FOUND = "Company not found.";
     public final static String DUPLICATE_COMPANY_FOUND = "Another company with this name already exists.";
-
-
+    public final static String ALREADY_ASSOCIATED_WITH_COMPANY = "You are already associated with a company.";
+    public static final String COMPANY_REQUIRED_FOR_JOB_CREATION_MESSAGE = "Please add a company to your recruiter profile before creating a job.";
+    public static final String JOB_CATEGORY_NOT_FOUND_OR_INACTIVE_MESSAGE = "Job category not found or inactive.";
+    public static final String JOB_NOT_FOUND_OR_ACCESS_DENIED_MESSAGE = "Job not found or you do not have access to this job.";
+    public static final String INVALID_EXPERIENCE_RANGE = "Minimum experience cannot be greater than maximum experience.";
+    public static final String INVALID_SALARY_RANGE = "Minimum salary cannot be greater than maximum salary.";
+    public static final String INVALID_JOB_STATUS = "Invalid job status. Allowed values: ACTIVE, CLOSED, EXPIRED, DRAFT.";
+    public static final String JOB_DELETED_SUCCESSFULLY = "Job deleted successfully.";
+    public static final String SEARCH_REQUEST_NULL = "Search request cannot be null.";
+    public static final String PAGE_NUMBER_NEGATIVE = "Page number cannot be negative.";
+    public static final String PAGE_SIZE_INVALID = "Page size must be greater than zero.";
+    public static final String INVALID_JOB_ID = "Invalid job ID.";
+    public static final String JOB_NOT_FOUND = "Job not found.";
 }

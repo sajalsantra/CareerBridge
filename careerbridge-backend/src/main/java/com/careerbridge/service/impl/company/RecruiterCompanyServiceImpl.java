@@ -59,7 +59,7 @@ public class RecruiterCompanyServiceImpl
         // 3. Check whether recruiter already has a company
         if (recruiterProfile.getCompany() != null) {
             throw new DuplicateResourceException(
-                    "You are already associated with a company."
+                    AppConstant.ALREADY_ASSOCIATED_WITH_COMPANY
             );
         }
 

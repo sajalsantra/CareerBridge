@@ -41,7 +41,46 @@ CREATE TABLE recruiter_profiles(
         ON DELETE SET NULL
 );
 
+-- 14. JOBS
+CREATE TABLE jobs(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    recruiter_profile_id BIGINT NOT NULL,
+    company_id BIGINT NOT NULL,
+    job_title VARCHAR(200) NOT NULL,
+    description TEXT NOT NULL,
+    responsibilities TEXT,
+    qualifications TEXT,
+    location VARCHAR(150),
+    job_type VARCHAR(50),
+    work_mode VARCHAR(50),
+    experience_min DECIMAL(4,2),
+    experience_max DECIMAL(4,2),
+    salary_min DECIMAL(12,2),
+    salary_max DECIMAL(12,2),
+    number_of_openings INT NOT NULL DEFAULT 1,
+    category_id BIGINT,
+    posted_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    application_deadline DATE,
+    status VARCHAR(50) NOT NULL DEFAULT 'ACTIVE',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    ON UPDATE CURRENT_TIMESTAMP,
 
+    CONSTRAINT fk_job_recruiter
+        FOREIGN KEY (recruiter_profile_id)
+        REFERENCES recruiter_profiles(id)
+       ON DELETE CASCADE,
+
+    CONSTRAINT fk_job_company
+        FOREIGN KEY (company_id)
+        REFERENCES companies(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_job_category
+        FOREIGN KEY (category_id)
+        REFERENCES job_categories(id)
+        ON DELETE SET NULL
+);
 
 
 
@@ -61,4 +100,21 @@ CREATE INDEX idx_companies_industry
 CREATE INDEX idx_companies_location
     ON companies(location);
 
+CREATE INDEX idx_jobs_recruiter
+    ON jobs(recruiter_profile_id);
+
+CREATE INDEX idx_jobs_company
+    ON jobs(company_id);
+
+CREATE INDEX idx_jobs_category
+    ON jobs(category_id);
+
+CREATE INDEX idx_jobs_status
+    ON jobs(status);
+
+CREATE INDEX idx_jobs_location
+    ON jobs(location);
+
+CREATE INDEX idx_jobs_status_posted
+    ON jobs(status, posted_date);
 

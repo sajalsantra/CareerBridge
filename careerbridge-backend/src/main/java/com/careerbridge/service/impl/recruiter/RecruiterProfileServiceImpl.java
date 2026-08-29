@@ -96,7 +96,7 @@ public class RecruiterProfileServiceImpl
                             )
                             .orElseThrow(() ->
                                     new ResourceNotFoundException(
-                                            "Company not found."
+                                            AppConstant.COMPANY_NOT_FOUND
                                     )
                             );
             profile.setCompany(company);
@@ -108,7 +108,7 @@ public class RecruiterProfileServiceImpl
                     )
                     .orElseThrow(() ->
                             new ResourceNotFoundException(
-                                    "Company not found."
+                                    AppConstant.COMPANY_NOT_FOUND
                             )
                     );
             profile.setCompany(company);
