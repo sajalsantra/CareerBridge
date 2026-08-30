@@ -10,5 +10,8 @@ public interface JobSeekerProfileRepository
 
     Optional<JobSeekerProfile> findByUserId(Long userId);
 
+    Optional<JobSeekerProfile> findByUserUsername(String username);
+
     boolean existsByUserId(Long userId);
+    boolean existsByUserUsername(String username);
 }

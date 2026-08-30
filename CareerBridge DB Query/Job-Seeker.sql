@@ -312,7 +312,7 @@ CREATE TABLE job_skills (
 );
 
 -- 16. APPLICATIONS
-CREATE TABLE applications (
+CREATE TABLE applications(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     job_id BIGINT NOT NULL,
     job_seeker_profile_id BIGINT NOT NULL,
@@ -321,14 +321,13 @@ CREATE TABLE applications (
     status VARCHAR(50) NOT NULL DEFAULT 'APPLIED',
     recruiter_remarks TEXT,
     applied_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP,
+    ON UPDATE CURRENT_TIMESTAMP,
 
-    CONSTRAINT fk_application_job
-        FOREIGN KEY (job_id)
-        REFERENCES jobs(id)
-        ON DELETE CASCADE,
+           CONSTRAINT fk_application_job
+           FOREIGN KEY (job_id)
+           REFERENCES jobs(id)
+       ON DELETE CASCADE,
 
     CONSTRAINT fk_application_profile
         FOREIGN KEY (job_seeker_profile_id)
@@ -337,7 +336,7 @@ CREATE TABLE applications (
 
     CONSTRAINT fk_application_resume
         FOREIGN KEY (resume_id)
-        REFERENCES resumes(id)
+        REFERENCES job_seeker_resumes(id)
         ON DELETE SET NULL,
 
     CONSTRAINT uk_job_seeker_application
@@ -443,6 +442,21 @@ CREATE INDEX idx_notifications_read
 
 CREATE INDEX idx_reports_status
     ON job_reports(status);
+
+CREATE INDEX idx_applications_job
+    ON applications(job_id);
+
+CREATE INDEX idx_applications_job_seeker
+    ON applications(job_seeker_profile_id);
+
+CREATE INDEX idx_applications_status
+    ON applications(status);
+
+CREATE INDEX idx_applications_job_status
+    ON applications(job_id, status);
+
+CREATE INDEX idx_applications_applied_at
+    ON applications(applied_at);
 
 -- 21. INITIAL ROLES
 INSERT INTO roles (name)

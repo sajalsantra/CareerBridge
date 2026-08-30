@@ -1,5 +1,7 @@
 package com.careerbridge.constant;
 
+import java.util.Set;
+
 public class AppConstant {
 
     public final static String APP_NAME = "CareerBridge";
@@ -24,7 +26,7 @@ public class AppConstant {
     public static final String AUTH_BASE = "/api/auth";
     public static final String JOB_SEEKER_BASE = "/api/job-seeker";
     public static final String RECRUITER_BASE = "/api/recruiter";
-    public static final String JOBS_API_BASE = "/api/jobs/";
+    public static final String JOBS_API_BASE = "/api/jobs";
     public static final String JOB_SEEKER_SKILL_BASE = "/api/job-seeker/skills";
     public static final String JOB_SEEKER_EDUCATION_BASE = "/api/job-seeker/education";
     public static final String JOB_SEEKER_EXPERIENCE_BASE = "/api/job-seeker/experience";
@@ -33,6 +35,7 @@ public class AppConstant {
     public static final String JOB_SEEKER_PROJECT_BASE = "/api/job-seeker/project";
     public static final String RECRUITER_COMPANY = "/api/recruiter/company";
     public static final String RECRUITER_JOB_BASE = "/api/recruiter/jobs";
+    public static final String APPLICATION_BASE = "/api/job-seeker/applications";
 
     // Massage
     public final static String REGISTRATION_SUCCEEDED = "Registration successful";
@@ -93,4 +96,25 @@ public class AppConstant {
     public static final String PAGE_SIZE_INVALID = "Page size must be greater than zero.";
     public static final String INVALID_JOB_ID = "Invalid job ID.";
     public static final String JOB_NOT_FOUND = "Job not found.";
+    public static final String RESUME_NOT_YOURS = "Resume does not belong to you.";
+    public static final String ALREADY_APPLIED = "You have already applied for this job.";
+    public static final String APPLICATION_DEADLINE_PASSED = "Application deadline has passed.";
+    public static final String JOB_NOT_ACCEPTING = "Job is no longer accepting applications.";
+    public static final String INVALID_RESUME_ID = "Invalid resume ID.";
+    public static final String APPLICATION_REQUEST_REQUIRED = "Application request is required.";
+    public static final String USERNAME_REQUIRED = "Username is required.";
+    public static final String APPLIED = "APPLIED";
+    public static final String WITHDRAWN = "WITHDRAWN";
+    public static final Set<String> NON_WITHDRAWABLE_STATUSES = Set.of("SELECTED", "REJECTED", "WITHDRAWN");
+    public static final String APPLICATION_STATUS_REQUIRED = "Application status is required.";
+    public static final String INVALID_PAGE_SIZE = "Page size must be between 1 and 100.";
+    public static final String INVALID_PAGE = "Page must be 0 or greater.";
+    public static final String INVALID_APPLICATION_STATUS = "Invalid application status.";
+    public static final String APPLICATION_ALREADY_WITHDRAWN = "Application is already withdrawn.";
+    public static final String APPLICATION_CANNOT_WITHDRAW = "Application cannot be withdrawn in its current status.";
+    public static final String APPLICATION_NOT_FOUND = "Application not found.";
+    public static final String INVALID_APPLICATION_ID = "Invalid application ID.";
+
+
+
 }
